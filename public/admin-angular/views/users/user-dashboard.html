@@ -1,0 +1,150 @@
+<div class="user-dashboard-page" ng-controller="UserDashboardController">
+
+    <!-- start banner Area -->
+    <section class="banner-area relative" id="home">
+        <div class="overlay overlay-bg"></div>
+        <div class="container">
+            <div class="row d-flex align-items-center justify-content-center">
+                <div class="about-content col-lg-12">
+                    <h1 class="text-white">
+                        Welcome: <span style="color: #f7b000;">{{g.loggedUser.companyName}}</span>
+                    </h1>
+                    <h5 class="text-white link-nav m-0">Thank you for connecting us.</h5>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- End banner Area -->
+
+    <section class="service-area mt-4 mb-5" id="service">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-lg-12">
+                    <ul class="nav nav-tabs" id="myTab" role="tablist">
+                        <li class="nav-item">
+                            <a aria-controls="job-mgmt" aria-selected="true" class="nav-link active" data-toggle="tab" href="#job-mgmt" id="job-mgmt-tab" role="tab">
+                                Manage Jobs
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a aria-controls="profile" aria-selected="false" class="nav-link" data-toggle="tab" href="#profile" id="profile-tab" role="tab" ng-click="udObj.profileObj.init()">
+                                Manage Profile
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a aria-controls="change-pass" aria-selected="false" class="nav-link" data-toggle="tab" href="#change-pass" id="change-pass-tab" role="tab">
+                                Change Password
+                            </a>
+                        </li>
+                    </ul>
+                    <div class="tab-content ic-tab-content p-3" id="myTabContent">
+                        <div aria-labelledby="job-mgmt-tab" class="tab-pane fade show active" id="job-mgmt" role="tabpanel">
+                            ...1
+                        </div>
+                        <div aria-labelledby="profile-tab" class="tab-pane fade" id="profile" role="tabpanel">
+                            <div class="creaditienl-boxes form-area" ng-form="profileForm">
+                                <div class="row">
+                                    <div class="col-lg-6">
+                                        <div class="form-group">
+                                            <label>Company Name <span class="pull-right text-danger" ng-if="udObj.profileObj.isSubmited && profileForm.companyname.$error.required">Required</span></label>
+                                            <input name="companyname" placeholder="Company Name" class="common-input form-control" ng-required="true" type="text" ng-model="udObj.profileObj.model.companyName">
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <div class="form-group">
+                                            <label>Contact Person Name <span class="pull-right text-danger" ng-if="udObj.profileObj.isSubmited && profileForm.contactPersonName.$error.required">Required</span></label>
+                                            <input name="contactPersonName" placeholder="Contact Person Name" class="common-input form-control" ng-required="true" type="text" ng-model="udObj.profileObj.model.contactPersonName">
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <div class="form-group">
+                                            <label>Email 
+                                                <span class="pull-right text-danger" ng-if="udObj.profileObj.isSubmited && profileForm.email.$error.required">Required</span>
+                                                <span class="pull-right text-danger" ng-if="udObj.profileObj.isSubmited && profileForm.email.$error.pattern || profileForm.email.$error.email">Invalid</span>
+                                            </label>
+                                            <input name="email" placeholder="Email" class="common-input form-control" ng-required="true" type="email" ng-model="udObj.profileObj.model.email" ng-pattern="/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/" autocomplete="off">
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <div class="form-group">
+                                            <label>Create Password <span class="pull-right text-danger" ng-if="udObj.profileObj.isSubmited && profileForm.password.$error.required">Required</span></label>
+                                            <input name="password" placeholder="Password" class="common-input form-control" ng-required="true" type="password" ng-model="udObj.profileObj.model.password" autocomplete="off">
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <div class="form-group">
+                                            <label>Contact Number
+                                                <span class="pull-right text-danger" ng-if="udObj.profileObj.isSubmited && profileForm.contact.$error.required">Required</span>
+                                                <span class="pull-right text-danger" ng-if="udObj.profileObj.isSubmited && profileForm.contact.$error.pattern">Must be 10 digit number</span>
+                                            </label>
+                                            <input type="number" name="contact" placeholder="Contact" class="common-input form-control" ng-required="true" ng-model="udObj.profileObj.model.contact" ng-pattern="/^\+?\d{10}$/">
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <div class="form-group">
+                                            <label>WatsApp Contact Number
+                                                <span class="pull-right text-danger" ng-if="udObj.profileObj.isSubmited && profileForm.wpContact.$error.required">Required</span>
+                                                <span class="pull-right text-danger" ng-if="udObj.profileObj.isSubmited && profileForm.wpContact.$error.pattern">Must be 10 digit number</span>
+                                            </label>
+                                            <input type="number" name="wpContact" placeholder="WatsApp Contact (Optional)" class="common-input form-control" ng-model="udObj.profileObj.model.wpContact" ng-pattern="/^\+?\d{10}$/">
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <div class="form-group">
+                                            <label>Address
+                                                <span class="pull-right text-danger" ng-if="udObj.profileObj.isSubmited && profileForm.address.$error.required">Required</span>
+                                            </label>
+                                            <input name="address" placeholder="Address" class="common-input form-control" type="text" ng-model="udObj.profileObj.model.address" ng-required="true">
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <div class="form-group">
+                                            <label>Company Website</label>
+                                            <input name="companyWebsite" placeholder="Website (Optional)" class="common-input form-control" type="text" ng-model="udObj.profileObj.model.companyWebsite">
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-12 text-right">
+                                        <hr>
+                                        <div class="form-group mb-0" ng-if="!udObj.profileObj.isReqSent">
+                                           <button class="btn btn-primary text-white" ng-click="udObj.profileObj.submit(profileForm)">Update</button>
+                                        </div>
+                                        <div class="form-group mb-0" ng-if="udObj.profileObj.isReqSent">
+                                           <button class="btn btn-primary text-white" disabled>Updating...</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div aria-labelledby="change-pass-tab" class="tab-pane fade" id="change-pass" role="tabpanel">
+                            <div class="creaditienl-boxes form-area" ng-form="chPassForm">
+                                <div class="row">
+                                    <div class="col-lg-6">
+                                        <div class="form-group">
+                                            <label>Old Password <span class="pull-right text-danger" ng-if="udObj.chPassObj.isSubmited && chPassForm.oldPassword.$error.required">Required</span></label>
+                                            <input name="oldPassword" placeholder="Old Password" class="common-input form-control" ng-required="true" type="password" ng-model="udObj.chPassObj.model.oldPassword" autocomplete="off">
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <div class="form-group">
+                                            <label>New Password <span class="pull-right text-danger" ng-if="udObj.chPassObj.isSubmited && chPassForm.password.$error.required">Required</span></label>
+                                            <input name="password" placeholder="Password" class="common-input form-control" ng-required="true" type="password" ng-model="udObj.chPassObj.model.password" autocomplete="off">
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-12 text-right">
+                                        <hr>
+                                        <div class="form-group mb-0" ng-if="!udObj.chPassObj.isReqSent">
+                                           <button class="btn btn-primary text-white" ng-click="udObj.chPassObj.submit(chPassForm)">Update</button>
+                                        </div>
+                                        <div class="form-group mb-0" ng-if="udObj.chPassObj.isReqSent">
+                                           <button class="btn btn-primary text-white" disabled>Updating...</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>

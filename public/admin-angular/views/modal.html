@@ -1,0 +1,676 @@
+<div class="modal fade full-modal" id="add-new-job" tabindex="-1" role="dialog" aria-hidden="true">
+	<div class="modal-dialog" role="document">
+		<div class="modal-content" ng-form="addnewJobForm">
+			<div class="modal-header">
+				<h3 class="modal-title">Post Job</h3>
+				<button type="button" class="close" aria-label="Close" ng-click="dbObj.postObj.closeModal()">
+		  			<i class="fa fa-window-close-o" aria-hidden="true"></i>
+				</button>
+			</div>
+			<div class="modal-body">
+				<div class="row">
+					<div class="col-md-6">
+						<div class="form-group">
+							<label>Job Title</label>
+							<input type="text" class="form-control" name="jobTitle" ng-model="dbObj.postObj.model.jobTitle" placeholder="Job Title" ng-required="true" ng-class="{ 'text-error': dbObj.postObj.isSubmited && addnewJobForm.jobTitle.$error.required }">
+						</div>
+					</div>
+					<div class="col-md-6">
+						<div class="form-group">
+							<label>Job Work Type</label>
+							<div class="custom-1">
+								<div class="custom-control custom-radio custom-control-inline">
+									<input type="radio" class="custom-control-input" value="1" id="customCheck2" ng-model="dbObj.postObj.model.jobWorkType">
+									<label class="custom-control-label" for="customCheck2">Full Time</label>
+								</div>
+								<div class="custom-control custom-radio custom-control-inline">
+									<input type="radio" class="custom-control-input" value="2" id="customCheck1" ng-model="dbObj.postObj.model.jobWorkType">
+									<label class="custom-control-label" for="customCheck1">Part Time</label>
+								</div>
+								<div class="custom-control custom-radio custom-control-inline">
+									<input type="radio" class="custom-control-input" value="3" id="customCheck3" ng-model="dbObj.postObj.model.jobWorkType">
+									<label class="custom-control-label" for="customCheck3">Both</label>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="col-md-6">
+						<div class="form-group">
+							<label>Qualification</label>
+							<select class="form-control" name="addqualification" ng-model="dbObj.postObj.model.qualification" ng-required="true" ng-class="{ 'text-error': dbObj.postObj.isSubmited && addnewJobForm.addqualification.$error.required }">
+								<option value="">--- Select Qualification ---</option>
+								<option ng-repeat="row in g.adminData.categoryArray" value="{{row.key}}">{{row.name}}</option>
+							</select>
+						</div>
+					</div>
+					<div class="col-md-6">
+						<div class="form-group">
+							<label>Select Cource</label>
+							<div class="multi-select-span" ng-if="dbObj.postObj.model.qualification">
+								<span class="pointer" ng-repeat="row in dbObj.comObj.qualification" ng-if="row.qualifyIn == dbObj.postObj.model.qualification" ng-click="g.adminData.multiSelect(dbObj.postObj.model.department, row.name)">
+									<span class="position-relative">
+										<span class="badge badge-pill badge-primary">
+											<span ng-if="dbObj.postObj.model.department.indexOf(row.name) != -1"><i class="fa fa-check-square" aria-hidden="true"></i></span> {{row.name}}
+										</span>
+									</span>
+								</span>
+							</div>
+							<div class="multi-select-span" ng-if="!dbObj.postObj.model.qualification">
+								<span>Select Qualification</span>
+							</div>
+						</div>
+					</div>
+					<div class="col-md-6">
+						<div class="form-group">
+							<label>Required Experience</label>
+							<select class="form-control" name="cexpRequired" ng-model="dbObj.postObj.model.cexpRequired" ng-required="true" ng-class="{ 'text-error': dbObj.postObj.isSubmited && addnewJobForm.cexpRequired.$error.required }">
+								<option value="">--- Select Experience ---</option>
+								<option value="1">Fresher</option>
+								<option value="2">6 Month To 1 Year</option>
+								<option value="3">1 To 2 Year</option>
+								<option value="4">3 To 5 Year</option>
+								<option value="5">5 Year +</option>
+							</select>
+						</div>
+					</div>
+					<div class="col-md-6">
+						<div class="form-group">
+							<label>Candidate Type</label>
+							<div class="custom-1">
+								<div class="custom-control custom-radio custom-control-inline">
+									<input type="radio" class="custom-control-input" value="1" id="ctype1" ng-model="dbObj.postObj.model.candidateType">
+									<label class="custom-control-label" for="ctype1">Male</label>
+								</div>
+								<div class="custom-control custom-radio custom-control-inline">
+									<input type="radio" class="custom-control-input" value="2" id="ctype2" ng-model="dbObj.postObj.model.candidateType">
+									<label class="custom-control-label" for="ctype2">Famale</label>
+								</div>
+								<div class="custom-control custom-radio custom-control-inline">
+									<input type="radio" class="custom-control-input" value="3" id="ctype3" ng-model="dbObj.postObj.model.candidateType">
+									<label class="custom-control-label" for="ctype3">Both</label>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="col-md-6">
+						<div class="form-group">
+							<label>Job Position</label>
+							<input type="text" class="form-control" name="jobPosition" ng-model="dbObj.postObj.model.jobPosition" ng-required="true" ng-class="{ 'text-error': dbObj.postObj.isSubmited && addnewJobForm.jobPosition.$error.required }">
+						</div>
+					</div>
+					<div class="col-md-6">
+						<div class="form-group">
+							<label>Job Category</label>
+							<select class="form-control" name="jobCategory" ng-model="dbObj.postObj.model.jobCategory" ng-required="true" ng-class="{ 'text-error': dbObj.postObj.isSubmited && addnewJobForm.jobCategory.$error.required }">
+								<option value="">--- Select Category ---</option>
+								<option value="{{$index+1}}" ng-repeat="whRow in g.adminData.jobCategory">{{whRow}}</option>
+							</select>
+						</div>
+					</div>
+					<div class="col-md-6">
+						<div class="form-group">
+							<label>Salary Type</label>
+							<div class="custom-1">
+								<div class="custom-control custom-radio custom-control-inline">
+									<input type="radio" class="custom-control-input" value="1" id="salaryType1" ng-model="dbObj.postObj.model.salaryType">
+									<label class="custom-control-label" for="salaryType1">Monthly</label>
+								</div>
+								<div class="custom-control custom-radio custom-control-inline">
+									<input type="radio" class="custom-control-input" value="2" id="salaryType2" ng-model="dbObj.postObj.model.salaryType">
+									<label class="custom-control-label" for="salaryType2">Yearly</label>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="col-md-6">
+						<div class="form-group">
+							<label>Salary</label>
+							<input type="text" class="form-control" name="salary" ng-model="dbObj.postObj.model.salary" ng-required="true" ng-class="{ 'text-error': dbObj.postObj.isSubmited && addnewJobForm.salary.$error.required }">
+						</div>
+					</div>
+					<div class="col-md-6">
+						<div class="form-group">
+							<label>Job City</label>
+							<select class="form-control" name="addjobCity" ng-model="dbObj.postObj.model.jobCity" ng-required="true" ng-class="{ 'text-error': dbObj.postObj.isSubmited && addnewJobForm.addjobCity.$error.required }">
+								<option value="">--- Select City ---</option>
+								<option ng-repeat="row in dbObj.comObj.cites" ng-if="row.status" value="{{row._id}}">{{row.city}}</option>
+							</select>
+						</div>
+					</div>
+					<div class="col-md-6">
+						<div class="form-group">
+							<label>Job Location (Area)</label>
+							<input type="text" class="form-control" name="jobLocation" ng-model="dbObj.postObj.model.jobLocation" ng-required="true" ng-class="{ 'text-error': dbObj.postObj.isSubmited && addnewJobForm.jobLocation.$error.required }">
+						</div>
+					</div>
+					<div class="col-md-6">
+						<div class="form-group">
+							<label>Working Hours</label>
+							<select class="form-control" name="jobTiming" ng-model="dbObj.postObj.model.jobTiming" ng-required="true" ng-class="{ 'text-error': dbObj.postObj.isSubmited && addnewJobForm.jobTiming.$error.required }">
+								<option value="">--- Working Hours ---</option>
+								<option value="{{$index+1}}" ng-repeat="whRow in g.adminData.whPerDay">{{whRow}}</option>
+							</select>
+						</div>
+					</div>
+					<div class="col-md-6">
+						<div class="form-group">
+							<label>Required Documents</label>
+							<div class="multi-select-span">
+								<span class="badge badge-pill badge-primary pointer mr-5" ng-repeat="row in g.adminData.requiredDocuments" ng-click="g.adminData.multiSelect(dbObj.postObj.model.requiredDoc, row)">
+									<span ng-if="dbObj.postObj.model.requiredDoc.indexOf(row) != -1"><i class="fa fa-check-square" aria-hidden="true"></i></span> {{row}}
+								</span>
+							</div>
+						</div>
+					</div>
+					<div class="col-md-6">
+						<div class="form-group">
+							<label>Facility</label>
+							<textarea class="form-control" name="facility" ng-model="dbObj.postObj.model.facility"></textarea>
+						</div>
+					</div>
+					<div class="col-md-6">
+						<div class="form-group">
+							<label>Required Skills</label>
+							<textarea class="form-control" name="workProfile" ng-model="dbObj.postObj.model.workProfile"></textarea>
+						</div>
+					</div>
+					<div class="col-md-6">
+						<div class="form-group">
+							<label>Note</label>
+							<textarea class="form-control" name="notes" ng-model="dbObj.postObj.model.notes"></textarea>
+						</div>
+					</div>
+					<div class="col-md-6">
+						<div class="form-group">
+							<label>Inteview Date</label>
+							<div class="custom-1">
+								<div class="custom-control-inline">
+									<div class="input-group">
+									  	<input type="text" class="form-control" aria-describedby="basic-addon1" name="interviewDateTime" ng-model="dbObj.postObj.model.interviewDateFrom" placeholder="Start Date" uib-datepicker-popup="{{g.adminData.dpFormat}}" is-open="dbObj.postObj.opened1" close-text="Close" readonly="">
+									  	<div class="input-group-append">
+									    	<span class="input-group-text pointer" ng-click="dbObj.postObj.opened1 = true"><i class="fa fa-calendar-o" aria-hidden="true"></i></span>
+									  	</div>
+									</div>
+								</div>
+								<div class="custom-control-inline">To</div>
+								<div class="custom-control-inline">
+									<div class="input-group">
+									  	<input type="text" class="form-control" aria-describedby="basic-addon2" name="interviewDateTime" ng-model="dbObj.postObj.model.interviewDateTo" placeholder="End Date" uib-datepicker-popup="{{g.adminData.dpFormat}}" is-open="dbObj.postObj.opened2" close-text="Close" readonly="">
+									  	<div class="input-group-append">
+									    	<span class="input-group-text pointer" ng-click="dbObj.postObj.opened2 = true"><i class="fa fa-calendar-o" aria-hidden="true"></i></span>
+									  	</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="modal-footer">
+		        <button type="button" class="btn btn-secondary" ng-click="dbObj.postObj.closeModal()">Close</button>
+		        <button type="button" class="btn btn-primary" ng-if="!dbObj.postObj.isReqSent" ng-click="dbObj.postObj.submit(addnewJobForm)">Save</button>
+		        <button type="button" class="btn btn-primary" ng-if="dbObj.postObj.isReqSent">Save changes</button>
+	      	</div>
+		</div>
+	</div>
+</div>
+
+
+<div class="modal fade full-modal" id="update-job-data" tabindex="-1" role="dialog" aria-hidden="true">
+	<div class="modal-dialog" role="document">
+		<div class="modal-content" ng-form="editJobForm">
+			<div class="modal-header">
+				<h3 class="modal-title">Post Job</h3>
+				<button type="button" class="close" aria-label="Close" ng-click="jobMgmtObj.edit.closeModal()">
+		  			<i class="fa fa-window-close-o" aria-hidden="true"></i>
+				</button>
+			</div>
+			<div class="modal-body">
+				<div class="row">
+					<div class="col-md-6">
+						<div class="form-group">
+							<label>Job Title</label>
+							<input type="text" class="form-control" name="jobTitle" ng-model="jobMgmtObj.edit.model.jobTitle" placeholder="Job Title" ng-required="true" ng-class="{ 'text-error': jobMgmtObj.edit.isSubmited && editJobForm.jobTitle.$error.required }">
+						</div>
+					</div>
+					<div class="col-md-6">
+						<div class="form-group">
+							<label>Job Work Type</label>
+							<div class="custom-1">
+								<div class="custom-control custom-radio custom-control-inline">
+									<input type="radio" class="custom-control-input" value="1" id="customCheck2" ng-model="jobMgmtObj.edit.model.jobWorkType">
+									<label class="custom-control-label" for="customCheck2">Full Time</label>
+								</div>
+								<div class="custom-control custom-radio custom-control-inline">
+									<input type="radio" class="custom-control-input" value="2" id="customCheck1" ng-model="jobMgmtObj.edit.model.jobWorkType">
+									<label class="custom-control-label" for="customCheck1">Part Time</label>
+								</div>
+								<div class="custom-control custom-radio custom-control-inline">
+									<input type="radio" class="custom-control-input" value="3" id="customCheck3" ng-model="jobMgmtObj.edit.model.jobWorkType">
+									<label class="custom-control-label" for="customCheck3">Both</label>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="col-md-6">
+						<div class="form-group">
+							<label>Qualification</label>
+							<select class="form-control" name="addqualification" ng-model="jobMgmtObj.edit.model.qualification" ng-required="true" ng-class="{ 'text-error': jobMgmtObj.edit.isSubmited && editJobForm.addqualification.$error.required }">
+								<option value="">--- Select Qualification ---</option>
+								<option ng-repeat="row in g.adminData.categoryArray" value="{{row.key}}">{{row.name}}</option>
+							</select>
+						</div>
+					</div>
+					<div class="col-md-6">
+						<div class="form-group">
+							<label>Select Cource</label>
+							<div class="multi-select-span" ng-if="jobMgmtObj.edit.model.qualification">
+								<span class="pointer" ng-repeat="row in jobMgmtObj.qualifications" ng-if="row.qualifyIn == jobMgmtObj.edit.model.qualification" ng-click="g.adminData.multiSelect(jobMgmtObj.edit.model.department, row.name)">
+									<span class="position-relative">
+										<span class="badge badge-pill badge-primary">
+											<span ng-if="jobMgmtObj.edit.model.department.indexOf(row.name) != -1"><i class="fa fa-check-square" aria-hidden="true"></i></span> {{row.name}}
+										</span>
+									</span>
+								</span>
+							</div>
+							<div class="multi-select-span" ng-if="!jobMgmtObj.edit.model.qualification">
+								<span>Select Qualification</span>
+							</div>
+						</div>
+					</div>
+					<div class="col-md-6">
+						<div class="form-group">
+							<label>Required Experience</label>
+							<select class="form-control" name="cexpRequired" ng-model="jobMgmtObj.edit.model.cexpRequired" ng-required="true" ng-class="{ 'text-error': jobMgmtObj.edit.isSubmited && editJobForm.cexpRequired.$error.required }">
+								<option value="">--- Select Experience ---</option>
+								<option value="1">Fresher</option>
+								<option value="2">6 Month To 1 Year</option>
+								<option value="3">1 To 2 Year</option>
+								<option value="4">3 To 5 Year</option>
+								<option value="5">5 Year +</option>
+							</select>
+						</div>
+					</div>
+					<div class="col-md-6">
+						<div class="form-group">
+							<label>Candidate Type</label>
+							<div class="custom-1">
+								<div class="custom-control custom-radio custom-control-inline">
+									<input type="radio" class="custom-control-input" value="1" id="ctype1" ng-model="jobMgmtObj.edit.model.candidateType">
+									<label class="custom-control-label" for="ctype1">Male</label>
+								</div>
+								<div class="custom-control custom-radio custom-control-inline">
+									<input type="radio" class="custom-control-input" value="2" id="ctype2" ng-model="jobMgmtObj.edit.model.candidateType">
+									<label class="custom-control-label" for="ctype2">Famale</label>
+								</div>
+								<div class="custom-control custom-radio custom-control-inline">
+									<input type="radio" class="custom-control-input" value="3" id="ctype3" ng-model="jobMgmtObj.edit.model.candidateType">
+									<label class="custom-control-label" for="ctype3">Both</label>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="col-md-6">
+						<div class="form-group">
+							<label>Job Position</label>
+							<input type="text" class="form-control" name="jobPosition" ng-model="jobMgmtObj.edit.model.jobPosition" ng-required="true" ng-class="{ 'text-error': jobMgmtObj.edit.isSubmited && editJobForm.jobPosition.$error.required }">
+						</div>
+					</div>
+					<div class="col-md-6">
+						<div class="form-group">
+							<label>Job Category</label>
+							<select class="form-control" name="jobCategory" ng-model="jobMgmtObj.edit.model.jobCategory" ng-required="true" ng-class="{ 'text-error': jobMgmtObj.edit.isSubmited && editJobForm.jobCategory.$error.required }">
+								<option value="">--- Select Category ---</option>
+								<option value="{{$index+1}}" ng-repeat="whRow in g.adminData.jobCategory">{{whRow}}</option>
+							</select>
+						</div>
+					</div>
+					<div class="col-md-6">
+						<div class="form-group">
+							<label>Salary Type</label>
+							<div class="custom-1">
+								<div class="custom-control custom-radio custom-control-inline">
+									<input type="radio" class="custom-control-input" value="1" id="salaryType1" ng-model="jobMgmtObj.edit.model.salaryType">
+									<label class="custom-control-label" for="salaryType1">Monthly</label>
+								</div>
+								<div class="custom-control custom-radio custom-control-inline">
+									<input type="radio" class="custom-control-input" value="2" id="salaryType2" ng-model="jobMgmtObj.edit.model.salaryType">
+									<label class="custom-control-label" for="salaryType2">Yearly</label>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="col-md-6">
+						<div class="form-group">
+							<label>Salary</label>
+							<input type="text" class="form-control" name="salary" ng-model="jobMgmtObj.edit.model.salary" ng-required="true" ng-class="{ 'text-error': jobMgmtObj.edit.isSubmited && editJobForm.salary.$error.required }">
+						</div>
+					</div>
+					<div class="col-md-6">
+						<div class="form-group">
+							<label>Job City</label>
+							<select class="form-control" name="addjobCity" ng-model="jobMgmtObj.edit.model.jobCity" ng-required="true" ng-class="{ 'text-error': jobMgmtObj.edit.isSubmited && editJobForm.addjobCity.$error.required }">
+								<option value="">--- Select City ---</option>
+								<option ng-repeat="row in jobMgmtObj.cities" ng-if="row.status" value="{{row._id}}">{{row.city}}</option>
+							</select>
+						</div>
+					</div>
+					<div class="col-md-6">
+						<div class="form-group">
+							<label>Job Location (Area)</label>
+							<input type="text" class="form-control" name="jobLocation" ng-model="jobMgmtObj.edit.model.jobLocation" ng-required="true" ng-class="{ 'text-error': jobMgmtObj.edit.isSubmited && editJobForm.jobLocation.$error.required }">
+						</div>
+					</div>
+					<div class="col-md-6">
+						<div class="form-group">
+							<label>Working Hours</label>
+							<select class="form-control" name="jobTiming" ng-model="jobMgmtObj.edit.model.jobTiming" ng-required="true" ng-class="{ 'text-error': jobMgmtObj.edit.isSubmited && editJobForm.jobTiming.$error.required }">
+								<option value="">--- Working Hours ---</option>
+								<option value="{{$index+1}}" ng-repeat="whRow in g.adminData.whPerDay">{{whRow}}</option>
+							</select>
+						</div>
+					</div>
+					<div class="col-md-6">
+						<div class="form-group">
+							<label>Required Documents</label>
+							<div class="multi-select-span">
+								<span class="badge badge-pill badge-primary pointer mr-5" ng-repeat="row in g.adminData.requiredDocuments" ng-click="g.adminData.multiSelect(jobMgmtObj.edit.model.requiredDoc, row)">
+									<span ng-if="jobMgmtObj.edit.model.requiredDoc.indexOf(row) != -1"><i class="fa fa-check-square" aria-hidden="true"></i></span> {{row}}
+								</span>
+							</div>
+						</div>
+					</div>
+					<div class="col-md-6">
+						<div class="form-group">
+							<label>Facility</label>
+							<textarea class="form-control" name="facility" ng-model="jobMgmtObj.edit.model.facility"></textarea>
+						</div>
+					</div>
+					<div class="col-md-6">
+						<div class="form-group">
+							<label>Required Skills</label>
+							<textarea class="form-control" name="workProfile" ng-model="jobMgmtObj.edit.model.workProfile"></textarea>
+						</div>
+					</div>
+					<div class="col-md-6">
+						<div class="form-group">
+							<label>Note</label>
+							<textarea class="form-control" name="notes" ng-model="jobMgmtObj.edit.model.notes"></textarea>
+						</div>
+					</div>
+					<div class="col-md-6">
+						<div class="form-group">
+							<label>Inteview Date</label>
+							<div class="custom-1">
+								<div class="custom-control-inline">
+									<div class="input-group">
+									  	<input type="text" class="form-control" aria-describedby="basic-addon1" name="interviewDateTime1" ng-model="jobMgmtObj.edit.model.interviewDateFrom" placeholder="Start Date" uib-datepicker-popup="{{g.adminData.dpFormat}}" is-open="jobMgmtObj.edit.opened1" close-text="Close" readonly="">
+									  	<div class="input-group-append">
+									    	<span class="input-group-text pointer" ng-click="jobMgmtObj.edit.opened1 = true"><i class="fa fa-calendar-o" aria-hidden="true"></i></span>
+									  	</div>
+									</div>
+								</div>
+								<div class="custom-control-inline">To</div>
+								<div class="custom-control-inline">
+									<div class="input-group">
+									  	<input type="text" class="form-control" aria-describedby="basic-addon2" name="interviewDateTime1" ng-model="jobMgmtObj.edit.model.interviewDateTo" placeholder="End Date" uib-datepicker-popup="{{g.adminData.dpFormat}}" is-open="jobMgmtObj.edit.opened2" close-text="Close" readonly="">
+									  	<div class="input-group-append">
+									    	<span class="input-group-text pointer" ng-click="jobMgmtObj.edit.opened2 = true"><i class="fa fa-calendar-o" aria-hidden="true"></i></span>
+									  	</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="modal-footer">
+		        <button type="button" class="btn btn-secondary" ng-click="jobMgmtObj.edit.closeModal()">Close</button>
+		        <button type="button" class="btn btn-primary" ng-if="!jobMgmtObj.edit.isReqSent" ng-click="jobMgmtObj.edit.submit(editJobForm)">Save</button>
+		        <button type="button" class="btn btn-primary" ng-if="jobMgmtObj.edit.isReqSent">Save changes</button>
+	      	</div>
+		</div>
+	</div>
+</div>
+
+
+
+
+
+<div class="modal fade full-modal" id="register-user" tabindex="-1" role="dialog" aria-hidden="true">
+	<div class="modal-dialog" role="document">
+		<div class="modal-content" ng-form="registerCandidateFrom">
+			<div class="modal-header">
+				<h3 class="modal-title">Candidate Register</h3>
+				<button type="button" class="close" aria-label="Close" ng-click="dbObj.rgUser.closeModal()">
+		  			<i class="fa fa-window-close-o" aria-hidden="true"></i>
+				</button>
+			</div>
+			<div class="modal-body">
+				<div class="row">
+					<div class="col-md-6">
+						<div class="form-group">
+							<label>Name</label>
+							<input type="text" class="form-control" name="name" ng-model="dbObj.rgUser.model.name" placeholder="Candidate name" ng-required="true" ng-class="{ 'text-error': dbObj.rgUser.isSubmited && registerCandidateFrom.name.$error.required }">
+						</div>
+					</div>
+					<div class="col-md-6">
+						<div class="form-group">
+							<label>Email</label>
+							<input type="email" class="form-control" name="email" ng-model="dbObj.rgUser.model.email" placeholder="Email" ng-required="true" ng-class="{ 'text-error': dbObj.rgUser.isSubmited && registerCandidateFrom.email.$error.required || registerCandidateFrom.email.$error.email }">
+						</div>
+					</div>
+					<div class="col-md-6">
+						<div class="form-group">
+							<label>Gender</label>
+							<div class="custom-1">
+								<div class="custom-control custom-radio custom-control-inline">
+									<input type="radio" class="custom-control-input" value="1" id="genderid1" ng-model="dbObj.rgUser.model.gender">
+									<label class="custom-control-label" for="genderid1">Male</label>
+								</div>
+								<div class="custom-control custom-radio custom-control-inline">
+									<input type="radio" class="custom-control-input" value="2" id="genderid2" ng-model="dbObj.rgUser.model.gender">
+									<label class="custom-control-label" for="genderid2">Famale</label>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="col-md-6">
+						<div class="form-group">
+							<label>Mobile Number</label>
+							<input type="number" class="form-control" name="mobile" ng-model="dbObj.rgUser.model.mobile" placeholder="Mobile number" ng-required="true" ng-class="{ 'text-error': dbObj.rgUser.isSubmited && registerCandidateFrom.mobile.$error.required }" maxlength="10" readonly="">
+						</div>
+					</div>
+					<div class="col-md-6">
+						<div class="form-group">
+							<label>WhatsApp Number</label>
+							<input type="number" class="form-control" name="wpContact" ng-model="dbObj.rgUser.model.wpContact" placeholder="Whatsapp contact number" ng-required="true" ng-class="{ 'text-error': dbObj.rgUser.isSubmited && registerCandidateFrom.wpContact.$error.required }" maxlength="10">
+						</div>
+					</div>
+					<div class="col-md-6">
+						<div class="form-group">
+							<label>Current Location</label>
+							<input type="text" class="form-control" name="currentLocation" ng-model="dbObj.rgUser.model.currentLocation" placeholder="Current Location" ng-required="true" ng-class="{ 'text-error': dbObj.rgUser.isSubmited && registerCandidateFrom.currentLocation.$error.required }">
+						</div>
+					</div>
+					<div class="col-md-6">
+						<div class="form-group">
+							<label>Date Of Birth</label>
+							<input type="text" class="form-control" name="birthDate" ng-model="dbObj.rgUser.model.birthDate" placeholder="Date Of Birth" ng-required="true" ng-class="{ 'text-error': dbObj.rgUser.isSubmited && registerCandidateFrom.birthDate.$error.required }">
+						</div>
+					</div>
+					<div class="col-md-6">
+						<div class="form-group">
+							<label>Qualification</label>
+							<select class="form-control" name="qualification" ng-model="dbObj.rgUser.model.qualification" ng-required="true" ng-class="{ 'text-error': dbObj.rgUser.isSubmited && registerCandidateFrom.qualification.$error.required }">
+								<option value="">--- Select Qualification ---</option>
+								<option ng-repeat="row in g.adminData.categoryArray" value="{{row.key}}">{{row.name}}</option>
+							</select>
+						</div>
+					</div>
+					<div class="col-md-6">
+						<div class="form-group">
+							<label>Department</label>
+
+							<select class="form-control" name="department" ng-model="dbObj.rgUser.model.department" ng-required="true" ng-class="{ 'text-error': dbObj.rgUser.isSubmited && registerCandidateFrom.department.$error.required }">
+								<option value="">--- Select Department ---</option>
+								<option ng-repeat="row in dbObj.comObj.qualification" value="{{row._id}}" ng-if="row.qualifyIn == dbObj.rgUser.model.qualification">{{row.name}}</option>
+							</select>
+						</div>
+					</div>
+					<div class="col-md-6">
+						<div class="form-group">
+							<label>Area Of Interest</label>
+
+							<div class="multi-select-span" ng-if="dbObj.rgUser.model.department">
+								<span class="pointer" ng-repeat="row in dbObj.comObj.areaOfInterest" ng-if="row.department == dbObj.rgUser.model.department" ng-click="g.adminData.multiSelect(dbObj.rgUser.model.areaOfInterest, row.title)">
+									<span class="position-relative">
+										<span class="badge badge-pill badge-primary">
+											<span ng-if="dbObj.rgUser.model.areaOfInterest.indexOf(row.title) != -1"><i class="fa fa-check-square" aria-hidden="true"></i></span> {{row.title}}
+										</span>
+									</span>
+								</span>
+							</div>
+							<div class="multi-select-span" ng-if="!dbObj.rgUser.model.department">
+								<span>Select Area Of Interest</span>
+							</div>
+						</div>
+					</div>
+					<div class="col-md-6">
+						<div class="form-group">
+							<label>Expected Salary</label>
+							<input type="text" class="form-control" name="expectedSalary" ng-model="dbObj.rgUser.model.expectedSalary" ng-required="true" ng-class="{ 'text-error': dbObj.rgUser.isSubmited && registerCandidateFrom.expectedSalary.$error.required }" placeholder="ex - 12000">
+						</div>
+					</div>
+					<div class="col-md-6">
+						<div class="form-group">
+							<label>Experience</label>
+							<input type="text" class="form-control" name="experienceDetail" ng-model="dbObj.rgUser.model.experienceDetail" placeholder="ex - 5years">
+						</div>
+					</div>
+					<div class="col-md-6">
+						<div class="form-group">
+							<label>City</label>
+							<select class="form-control" name="jobCity" ng-model="dbObj.rgUser.model.jobCity" ng-required="true" ng-class="{ 'text-error': dbObj.rgUser.isSubmited && registerCandidateFrom.jobCity.$error.required }">
+								<option value="">--- Select City ---</option>
+								<option ng-repeat="row in dbObj.comObj.cites" ng-if="row.status" value="{{row._id}}">{{row.city}}</option>
+							</select>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="modal-footer">
+		        <button type="button" class="btn btn-secondary" ng-click="dbObj.rgUser.closeModal()">Close</button>
+		        <button type="button" class="btn btn-primary" ng-if="!dbObj.rgUser.isReqSent" ng-click="dbObj.rgUser.submit(registerCandidateFrom)">Save</button>
+		        <button type="button" class="btn btn-primary" ng-if="dbObj.rgUser.isReqSent">Save changes</button>
+	      	</div>
+		</div>
+	</div>
+</div>
+
+
+
+
+<!-- Mange Team member -->
+<div class="modal fade" id="manage-team-membe" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content" ng-form="addNewMemberForm">
+            <div class="modal-header">
+                <h3 class="modal-title">Mange Team member</h3>
+                <button type="button" class="close" aria-label="Close" ng-click="stMgmt.siteObj.team.closeModal()">
+                    <i class="fa fa-window-close-o" aria-hidden="true"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label>Full Name</label>
+                            <input type="text" class="form-control" name="fillname" ng-model="stMgmt.siteObj.team.model.fullname" placeholder="Full Name" ng-required="true" ng-class="{ 'text-error': stMgmt.siteObj.team.isSubmited && addNewMemberForm.fillname.$error.required }">
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label>Position</label>
+                            <input type="text" class="form-control" name="position" ng-model="stMgmt.siteObj.team.model.position" placeholder="Position" ng-required="true" ng-class="{ 'text-error': stMgmt.siteObj.team.isSubmited && addNewMemberForm.position.$error.required }">
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label>Mobile</label>
+                            <input type="number" class="form-control" name="mobile" ng-model="stMgmt.siteObj.team.model.mobile" placeholder="Mobile" ng-required="true" ng-class="{ 'text-error': stMgmt.siteObj.team.isSubmited && addNewMemberForm.mobile.$error.required }">
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label>Email</label>
+                            <input type="email" class="form-control" name="memberemail" ng-model="stMgmt.siteObj.team.model.email" placeholder="Email" ng-required="true" ng-class="{ 'text-error': stMgmt.siteObj.team.isSubmited && addNewMemberForm.memberemail.$error.required }">
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label>Facebook Profile Link</label>
+                            <input type="text" class="form-control" name="fblink" ng-model="stMgmt.siteObj.team.model.fblink" placeholder="Facebook">
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label>Twitter Profile Link</label>
+                            <input type="text" class="form-control" name="twitterlink" ng-model="stMgmt.siteObj.team.model.twitterlink" placeholder="Twitter">
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label>Linkedin Profile Link</label>
+                            <input type="text" class="form-control" name="linkedinlink" ng-model="stMgmt.siteObj.team.model.linkedinlink" placeholder="Linkedin">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" ng-click="stMgmt.siteObj.team.closeModal()">Close</button>
+                <button type="button" class="btn btn-primary" ng-disabled="!addNewMemberForm.$valid" ng-click="stMgmt.siteObj.team.submit(addNewMemberForm)">Save</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<div class="modal fade" id="confirm-contact" tabindex="-1" role="dialog" aria-hidden="true">
+	<div class="modal-dialog" role="document">
+		<div class="modal-content" ng-form="confirmMobileForm">
+			<div class="modal-header">
+				<h3 class="modal-title">Confirm</h3>
+				<button type="button" class="close" aria-label="Close" ng-click="dbObj.rgUser.closeModal()">
+		  			<i class="fa fa-window-close-o" aria-hidden="true"></i>
+				</button>
+			</div>
+			<div class="modal-body">
+				<div class="row">
+					<div class="col-md-12">
+						<div class="form-group">
+							<label>Select Job 
+								<span class="float-right" ng-if="dbObj.rgUser.confirmUnique.isSubmited && confirmMobileForm.jobselect.$error.required">Reqquired</span>
+							</label>
+							<select class="form-control" name="jobselect" ng-model="dbObj.rgUser.model.jobId">
+								<option value="">--- Select Job ---</option>
+								<option ng-repeat="jobs in dbObj.comObj.activeJobs" value="{{jobs._id}}">{{jobs.jobTitle}}</option>
+							</select>
+						</div>
+					</div>
+					<div class="col-md-12">
+						<div class="form-group">
+							<label>Contact Number</label>
+							<input type="number" class="form-control" name="phone" ng-model="dbObj.rgUser.model.mobile" maxlength="10">
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="modal-footer">
+		        <button type="button" class="btn btn-primary" ng-if="!dbObj.rgUser.confirmUnique.isReqSent" ng-click="dbObj.rgUser.confirmUnique.submit(confirmMobileForm)">Confirm</button>
+		        <button type="button" class="btn btn-primary" ng-if="dbObj.rgUser.confirmUnique.isReqSent" disabled="">Loading...</button>
+	      	</div>
+		</div>
+	</div>
+</div>

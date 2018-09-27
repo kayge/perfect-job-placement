@@ -1,0 +1,15 @@
+<nav class="navbar navbar-dark fixed-top bg-dark flex-md-nowrap p-0 shadow ic-nav-bar">
+    <a class="navbar-brand col-sm-3 col-md-2 mr-0 text-white pointer" ng-click="g.stateGo('dashboard')">
+        Perfect Job Placement
+    </a>
+    <ul class="navbar-nav px-3">
+        <li class="nav-item text-nowrap" ng-if="g.loggedUser._id">
+            <button type="button" class="btn btn-primary btn-sm header-logged-user"><i class="fa fa-address-book-o" aria-hidden="true"></i> {{g.loggedUser.firstName}} {{g.loggedUser.lastName}}</button>
+            <button type="button" class="btn btn-primary btn-sm header-logged-user">
+                <a href="/users/signout">
+                    Sign Out
+                </a>
+            </button>
+        </li>
+    </ul>
+</nav>

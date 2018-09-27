@@ -1,0 +1,189 @@
+
+<div class="contact-page" ng-controller="ContactController">
+
+	<!-- start banner Area -->
+	<section class="banner-area relative" id="home">	
+		<div class="overlay overlay-bg"></div>
+		<div class="container">
+			<div class="row d-flex align-items-center justify-content-center">
+				<div class="about-content col-lg-12">
+					<h1 class="text-white">
+						Contact Us				
+					</h1>	
+					<p class="text-white"><a href="#!/home">Home </a>  <span class="lnr lnr-arrow-right"></span>  <a href="contact.html"> Contact Us</a></p>
+				</div>											
+			</div>
+		</div>
+		<div class="container-fluid" ng-if="!g.loggedUser._id">
+			<div class="row">
+				<div class="col-md-12">
+					<div class="row">
+						<div class="col-lg-3 col-md-6 mb-15">
+							<div class="single-feature">
+								<h4>Office Contact</h4>
+								<div class="contact-detail"><i class="fa fa-phone-square mr-5" aria-hidden="true"></i>{{comnObj.siteSettings.data.officeC1 || '+91 78781 18188'}}</div>
+								<div class="contact-detail"><i class="fa fa-phone-square mr-5" aria-hidden="true"></i>{{comnObj.siteSettings.data.officeC2 || '+91 63554 89383'}}</div>
+								<div class="contact-detail"><i class="fa fa-envelope-o mr-5" aria-hidden="true"></i>{{comnObj.siteSettings.data.officeEmail || 'resume.pjp@gmail.com'}}</div>
+							</div>
+						</div>
+						<div class="col-lg-3 col-md-6 mb-15">
+							<div class="single-feature">
+								<h4>HR Contact</h4>
+								<div class="contact-detail"><i class="fa fa-phone-square mr-5" aria-hidden="true"></i>{{comnObj.siteSettings.data.hrContact1 || '+91 79841 75602'}}</div>
+								<div class="contact-detail"><i class="fa fa-phone-square mr-5" aria-hidden="true"></i>{{comnObj.siteSettings.data.hrContact2 || '+91 79841 75602'}}</div>
+								<div class="contact-detail"><i class="fa fa-envelope-o mr-5" aria-hidden="true"></i>{{comnObj.siteSettings.data.hrContactEmail || 'hrd.pjob@gmail.com'}}</div>
+							</div>
+						</div>
+						<div class="col-lg-3 col-md-6 mb-15">
+							<div class="single-feature">
+								<h4>Address</h4>
+								<div class="contact-detail">
+									{{comnObj.siteSettings.data.Address || '55/D Gulabvihar,Opp.
+									Amarnath Temple Garden,
+									Behind Big Bazaar,
+									Rajkot-360005'}}
+								</div>
+							</div>
+						</div>
+						<div class="col-lg-3 col-md-6 mb-15">
+							<div class="single-feature">
+								<h4>Contact For Franchises</h4>
+								<div class="contact-detail"><i class="fa fa-phone-square mr-5" aria-hidden="true"></i>{{comnObj.siteSettings.data.helpContact1 || '+91 63535 05097'}}</div>
+								<!-- <div class="contact-detail"><i class="fa fa-whatsapp mr-5" aria-hidden="true"></i>{{comnObj.siteSettings.data.helpContact2 || '+91 63554 89383'}}</div> -->
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+	<!-- End banner Area -->
+
+
+	<!-- Start contact-page Area -->
+	<section class="contact-page-area section-gap" ng-if="!g.loggedUser._id">
+		<div class="container">
+			<div class="row">
+				<div class="col-md-12">
+					<div class="row custom-tab-menu mb-15">
+						<div class="col-md-4">
+							<div class="tab-li pointer text-white" ng-click="conObj.inqObj.inquireyFor = 1; conObj.inqObj.palceHolder = 'Enter your name'" ng-class="{ 'active': conObj.inqObj.inquireyFor == 1 }">Candidate Inquiry</div>
+						</div>
+						<div class="col-md-4">
+							<div class="tab-li pointer text-white" ng-click="conObj.inqObj.inquireyFor = 2; conObj.inqObj.palceHolder = 'Enter your Company name'" ng-class="{ 'active': conObj.inqObj.inquireyFor == 2 }">Company Inquiry</div>
+						</div>
+						<div class="col-md-4">
+							<div class="tab-li pointer text-white" href="#!/home">Aplly For Job</div>
+						</div>
+					</div>
+				</div>
+
+				<div class="col-lg-6 d-flex flex-column">
+					<div class="map-wrap" style="width:100%; height: 445px;" id="map"></div>
+				</div>
+
+				<div class="col-lg-6 form-area" ng-form="contactUs">
+					<div class="form-group">
+						<input name="name" placeholder="{{conObj.inqObj.palceHolder}}" class="common-input form-control" ng-required="true" type="text" ng-model="conObj.inqObj.model.name">
+					</div>
+					<div class="form-group">
+						<input name="email" placeholder="Enter email address" pattern="[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{1,63}$" class="common-input form-control" ng-required="true" type="email" ng-model="conObj.inqObj.model.email">
+					</div>
+					<div class="form-group">
+						<input name="text" placeholder="Mobile Number" class="common-input form-control" ng-required="true" type="number" ng-model="conObj.inqObj.model.contact" ng-minlength="10" ng-maxlength="10" maxlength="10">
+					</div>
+					<div class="form-group">
+						<input name="subject" placeholder="Enter your subject" class="common-input form-control" ng-required="true" type="text" ng-model="conObj.inqObj.model.subject">
+					</div>
+					<div class="form-group">
+						<textarea class="common-textarea mt-10 form-control" name="message" placeholder="Messege (Optional)" ng-required="true" ng-model="conObj.inqObj.model.message"></textarea>
+					</div>
+					<div class="form-group">
+						<div ng-if="!conObj.inqObj.isReqSent">
+							<button class="primary-btn text-white" style="float: right;" ng-click="conObj.inqObj.submit(contactUs)">Send Message</button>
+						</div>
+						<div ng-if="conObj.inqObj.isReqSent">
+							<button class="primary-btn text-white" style="float: right;" disabled>Send Message</button>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>	
+	</section>
+
+	<section class="contact-page-area section-gap" ng-if="g.loggedUser._id">
+		<div class="container-fluid">
+			<div class="row">
+				<div class="col-md-12">
+					<div class="row">
+						<div class="col-lg-3 col-md-6 mb-15">
+							<div class="single-feature">
+								<h4>Office Contact</h4>
+								<div class="contact-detail"><i class="fa fa-phone-square mr-5" aria-hidden="true"></i>{{comnObj.siteSettings.data.officeC1 || '+91 78781 18188'}}</div>
+								<div class="contact-detail"><i class="fa fa-phone-square mr-5" aria-hidden="true"></i>{{comnObj.siteSettings.data.officeC2 || '+91 63554 89383'}}</div>
+								<div class="contact-detail"><i class="fa fa-envelope-o mr-5" aria-hidden="true"></i>{{comnObj.siteSettings.data.officeEmail || 'resume.pjp@gmail.com'}}</div>
+							</div>
+						</div>
+						<div class="col-lg-3 col-md-6 mb-15">
+							<div class="single-feature">
+								<h4>HR Contact</h4>
+								<div class="contact-detail"><i class="fa fa-phone-square mr-5" aria-hidden="true"></i>{{comnObj.siteSettings.data.hrContact1 || '+91 79841 75602'}}</div>
+								<div class="contact-detail"><i class="fa fa-phone-square mr-5" aria-hidden="true"></i>{{comnObj.siteSettings.data.hrContact2 || '+91 79841 75602'}}</div>
+								<div class="contact-detail"><i class="fa fa-envelope-o mr-5" aria-hidden="true"></i>{{comnObj.siteSettings.data.hrContactEmail || 'hrd.pjob@gmail.com'}}</div>
+							</div>
+						</div>
+						<div class="col-lg-3 col-md-6 mb-15">
+							<div class="single-feature">
+								<h4>Address</h4>
+								<div class="contact-detail">
+									{{comnObj.siteSettings.data.Address || '55/D Gulabvihar,Opp.
+									Amarnath Temple Garden,
+									Behind Big Bazaar,
+									Rajkot-360005'}}
+								</div>
+							</div>
+						</div>
+						<div class="col-lg-3 col-md-6 mb-15">
+							<div class="single-feature">
+								<h4>Contact For Franchises</h4>
+								<div class="contact-detail"><i class="fa fa-phone-square mr-5" aria-hidden="true"></i>{{comnObj.siteSettings.data.helpContact1 || '+91 63535 05097'}}</div>
+								<!-- <div class="contact-detail"><i class="fa fa-whatsapp mr-5" aria-hidden="true"></i>{{comnObj.siteSettings.data.helpContact2 || '+91 63554 89383'}}</div> -->
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+
+
+	<div class="modal fade thankyoumodal" id="thankyou-contact" tabindex="-1" role="dialog" aria-hidden="true">
+		<div class="modal-dialog modal-dialog-centered" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h3 class="modal-title">Thank you for trust with us!</h3>
+					<button type="button" class="close text-white" data-dismiss="modal" aria-label="Close">
+			  			<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+				<div class="modal-body text-center">
+					<div class="body-text pt-25">We will touch you soon...</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+
+<!-- 
+<script>
+	function initMap() {
+	  var uluru = {lat: 22.2787847, lng: 70.7707777};
+	  var map = new google.maps.Map(document.getElementById('map'), {zoom: 20, center: uluru});
+	  var marker = new google.maps.Marker({position: uluru, map: map});
+	}
+</script>
+
+<script async defer
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDzfYRsSxH49xYLXI8GNf36lR38krMU6_Q&callback=initMap">
+</script> -->

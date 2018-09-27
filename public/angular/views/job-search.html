@@ -1,0 +1,89 @@
+
+<div class="category-page" ng-controller="HomeController" ng-init="homeObj.jobjByFilter.init()">
+
+	<!-- start banner Area -->
+	<section class="banner-area relative" id="home">
+		<div class="overlay overlay-bg"></div>
+		<div class="container">
+			<div class="row d-flex align-items-center justify-content-center">
+				<div class="about-content col-lg-12">
+					<h1 class="text-white">
+						Job By category
+					</h1>
+					<p class="text-white link-nav"><a href="#!/home">Home </a>  <span class="lnr lnr-arrow-right"></span>  <a href="#!/category"> Job category</a></p>
+				</div>
+			</div>
+		</div>
+	</section>
+	<!-- End banner Area -->
+
+
+	<!-- Start post Area -->
+	<section class="post-area section-gap">
+		<div class="container">
+			<div class="row justify-content-center d-flex" ng-show="!homeObj.jobjByFilter.list.isLoading">
+				<div class="col-lg-12 post-list" ng-if="homeObj.jobjByFilter.data.length">
+					<ul class="cat-list">
+						<li ng-click="homeObj.getFilterData(1)" ng-class="{'active-btn': homeObj.jobjByFilter.list.filter.isActive == 1}"><a class="pointer">Full Time</a></li>
+						<li ng-click="homeObj.getFilterData(2)" ng-class="{'active-btn': homeObj.jobjByFilter.list.filter.isActive == 2}"><a class="pointer">part Time</a></li>
+						<li ng-click="homeObj.getFilterData(3)" ng-class="{'active-btn': homeObj.jobjByFilter.list.filter.isActive == 3}"><a class="pointer">Both</a></li>
+					</ul>
+
+					<div class="single-post position-relative" ng-repeat="jobRow in dataFilterObject = (homeObj.jobjByFilter.data | filter: homeObj.jobObj.list.filter.filterObj) | orderBy: '-createdAt'">
+						<div class="row">
+							<span class="job-work-timing"><span ng-if="jobRow.jobWorkType != 3">{{g.adminData.jobWorkType[jobRow.jobWorkType]}}</span>
+							<span ng-if="jobRow.jobWorkType == 3">Part Time & Full Time</span></span>
+
+							<div class="col-md-2 text-center">
+								<i ng-if="jobRow.jobCategory == '1'" class="theme-color mb-3 fa fa-industry font-50" aria-hidden="true"></i>
+								<i ng-if="jobRow.jobCategory == '2'" class="theme-color mb-3 fa fa-laptop font-50" aria-hidden="true"></i>
+								<i ng-if="jobRow.jobCategory == '3'" class="theme-color mb-3 fa fa-briefcase font-50" aria-hidden="true"></i>
+								<i ng-if="jobRow.jobCategory == '4'" class="theme-color mb-3 fa fa-handshake-o font-50" aria-hidden="true"></i>
+								<i ng-if="jobRow.jobCategory == '5'" class="theme-color mb-3 fa fa-building-o font-50" aria-hidden="true"></i>
+								<i ng-if="jobRow.jobCategory == '6'" class="theme-color mb-3 fa fa-question-circle-o font-50" aria-hidden="true"></i>
+							</div>
+							<div class="col-md-10">
+								<div class="titles">
+									<h4>{{jobRow.jobTitle}} - <span class="text-orange f-w-400 font-size-16">{{g.adminData.candidateMinExp[jobRow.cexpRequired]}}</span></h4>
+									<h6><span class="f-w-600">Position:</span> {{jobRow.jobPosition}}</h6>
+									<h6><span class="f-w-600"><i class="fa fa-inr" aria-hidden="true"></i> Salary:</span> {{jobRow.salary}}</h6>
+									<h6><span class="f-w-600"><i class="fa fa-map-marker" aria-hidden="true"></i> City:</span> {{jobRow.cityName}} - ({{jobRow.jobLocation}})</h6>
+									<h6><span class="f-w-600">Required Qualification:</span> {{g.adminData.categoryObject[jobRow.qualification]}}</h6>
+
+									<button type="button" class="btn btn-primary btn-sm ic-btn" ng-click="homeObj.jobObj.preview.open(jobRow)">job Detail</button>
+									<button type="button" class="btn btn-secondary btn-sm ic-btn" ng-click="homeObj.jobObj.applyjob.openModal(jobRow)">Apply Job</button>
+								</div>
+							</div>
+						</div>
+					</div>
+					
+					<div class="text-center" ng-if="!dataFilterObject.length">
+						<h4>No data!</h4>
+					</div>
+		
+					<a class="text-uppercase loadmore-btn mx-auto d-block" ng-if="homeObj.jobjByFilter.totalJobs > homeObj.jobjByFilter.data.length">Load More job Posts</a>
+				</div>
+
+				<div class="col-md-12 text-center no-data-c" ng-if="!homeObj.jobjByFilter.data.length && !homeObj.jobjByFilter.list.isLoading">
+					<h4>Sorry we have No job for this category!</h4>
+				</div>
+			</div>
+
+			<div ng-if="homeObj.jobjByFilter.list.isLoading" class="text-center loading-cn">
+				<h2>
+					<i class="fa fa-spinner fa-pulse fa-fw"></i>
+					<span class="sr-only">Loading recent job...</span>
+				</h2>
+			</div>
+		</div>	
+	</section>
+	<!-- End post Area -->
+
+
+	<!-- Start callto-action Area -->
+	<div data-ng-include="'/angular/views/includes/Join-us-content.html'"></div>
+
+</div>
+
+
+
