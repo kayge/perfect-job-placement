@@ -16,7 +16,6 @@ appModule.controller('userInquiryMgmtController', ['$scope', '$http', '$location
 
 			icdb.get('Inquiry', function(result) {
 				$scope.userInqObj.list.data = result;
-				console.log("$scope.userInqObj.list.data >>>", $scope.userInqObj.list.data);
 
 				$timeout(function() {
 					$scope.userInqObj.list.loading = false;

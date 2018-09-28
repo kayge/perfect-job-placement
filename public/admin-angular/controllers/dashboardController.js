@@ -8,38 +8,21 @@ appModule.controller('DashboardController', ['$scope', '$http', '$location', '$u
 		$scope.dbObj.comObj = {};	
 		$rootScope.g.adminData = globalObj;
 
+
+
 		$scope.dbObj.comObj.loading = false;
 
 		$scope.dbObj.comObj.initGlobal = function() {
 
 			$scope.dbObj.comObj.loading = true;
 
-			icdb.get('JobLocations', function(result) {
-				$scope.dbObj.comObj.cites = result;
+			$http.get('/api/admin/get/dashboard-counts').then(function(response) {
+				$scope.dbObj.comObj.totalCounts = response.data;
 
-		        icdb.get('Qualifications', function(result) {
-					$scope.dbObj.comObj.qualification = result;
-
-					icdb.get('AreaOfInterest', function(result) {
-						$scope.dbObj.comObj.areaOfInterest = result;
-				        
-						$http.get('/api/admin/get/dashboard-counts').then(function(response) {
-							$scope.dbObj.comObj.totalCounts = response.data;
-
-							$timeout(function() {
-								$scope.dbObj.comObj.loading = false;
-							}, 10);
-						});
-			        });
-		        });
-	        });
-
-
-	        icdb.getCondition('JobsBazaar', {
-				status: 2
-			}, function(response) {
-				$scope.dbObj.comObj.activeJobs = response;
-	        });
+				$timeout(function() {
+					$scope.dbObj.comObj.loading = false;
+				}, 10);
+			});
 		}
 
 
@@ -97,6 +80,15 @@ appModule.controller('DashboardController', ['$scope', '$http', '$location', '$u
 			$scope.dbObj.rgUser.model.salaryType = 1;
 			$scope.dbObj.rgUser.model.areaOfInterest = [];
 			$('#confirm-contact').modal('show');
+		}
+
+		$scope.dbObj.rgUser.offlineUserReg = function() {
+			$scope.dbObj.rgUser.model.jobWorkType = 1;
+			$scope.dbObj.rgUser.model.candidateType = 1;
+			$scope.dbObj.rgUser.model.salaryType = 1;
+			$scope.dbObj.rgUser.model.gender = 1;
+			$scope.dbObj.rgUser.model.areaOfInterest = [];
+			$('#register-user').modal('show');
 		}
 
 		$scope.dbObj.rgUser.closeModal = function() {

@@ -66,23 +66,23 @@
 			<div class="row">
 				<div class="col-md-12">
 					<div class="row custom-tab-menu mb-15">
-						<div class="col-md-4">
+						<div class="col-md-6">
 							<div class="tab-li pointer text-white" ng-click="conObj.inqObj.inquireyFor = 1; conObj.inqObj.palceHolder = 'Enter your name'" ng-class="{ 'active': conObj.inqObj.inquireyFor == 1 }">Candidate Inquiry</div>
 						</div>
-						<div class="col-md-4">
+						<div class="col-md-6">
 							<div class="tab-li pointer text-white" ng-click="conObj.inqObj.inquireyFor = 2; conObj.inqObj.palceHolder = 'Enter your Company name'" ng-class="{ 'active': conObj.inqObj.inquireyFor == 2 }">Company Inquiry</div>
 						</div>
-						<div class="col-md-4">
+						<!-- <div class="col-md-4">
 							<div class="tab-li pointer text-white" href="#!/home">Aplly For Job</div>
-						</div>
+						</div> -->
 					</div>
 				</div>
-
+<!-- 
 				<div class="col-lg-6 d-flex flex-column">
 					<div class="map-wrap" style="width:100%; height: 445px;" id="map"></div>
-				</div>
+				</div> -->
 
-				<div class="col-lg-6 form-area" ng-form="contactUs">
+				<div class="col-lg-12 form-area" ng-form="contactUs">
 					<div class="form-group">
 						<input name="name" placeholder="{{conObj.inqObj.palceHolder}}" class="common-input form-control" ng-required="true" type="text" ng-model="conObj.inqObj.model.name">
 					</div>
@@ -98,12 +98,12 @@
 					<div class="form-group">
 						<textarea class="common-textarea mt-10 form-control" name="message" placeholder="Messege (Optional)" ng-required="true" ng-model="conObj.inqObj.model.message"></textarea>
 					</div>
-					<div class="form-group">
+					<div class="form-group text-center">
 						<div ng-if="!conObj.inqObj.isReqSent">
-							<button class="primary-btn text-white" style="float: right;" ng-click="conObj.inqObj.submit(contactUs)">Send Message</button>
+							<button class="primary-btn text-white" ng-click="conObj.inqObj.submit(contactUs)">Send Message</button>
 						</div>
 						<div ng-if="conObj.inqObj.isReqSent">
-							<button class="primary-btn text-white" style="float: right;" disabled>Send Message</button>
+							<button class="primary-btn text-white" disabled>Sending...</button>
 						</div>
 					</div>
 				</div>

@@ -3,8 +3,14 @@
 appModule.controller('HomeController', ['$scope', '$http', '$location', '$uibModal', '$stateParams', '$rootScope', '$timeout', '$state', 'icdb', 'alertService',
     function($scope, $http, $location, $uibModal, $stateParams, $rootScope, $timeout, $state, icdb, alertService) {
 
-    	$scope.homeObj = {};
+        $scope.homeObj = {};
+    	$scope.homeObj.cobj = {};
         $rootScope.g.adminData = globalObj;
+
+
+        $scope.homeObj.cobj.commingSoon = function() {
+            $('#comming-soon').modal('show');
+        }
 
 
 

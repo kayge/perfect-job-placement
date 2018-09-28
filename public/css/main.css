@@ -2200,7 +2200,7 @@ body.mobile-nav-active #mobile-nav-toggle {
 }
 
 .section-gap {
-  padding: 120px 0;
+  padding: 30px 0;
 }
 
 .section-title {
@@ -2521,7 +2521,7 @@ body.mobile-nav-active #mobile-nav-toggle {
   border-radius: 5px;
   background-color: white;
   box-shadow: 0px 0px 40px 0px rgba(132, 144, 255, 0.2);
-  padding: 25px 10px;
+  padding: 25px 30px;
   min-height: 155px;
 }
 
@@ -3119,7 +3119,7 @@ body.mobile-nav-active #mobile-nav-toggle {
 }
 
 .footer-area {
-  padding-top: 100px;
+  /*padding-top: 100px;*/
   background-color: #222222;
 }
 

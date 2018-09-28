@@ -40,7 +40,7 @@ appModule.controller('companyUserMgmtController', ['$scope', '$http', '$location
 				
 				for (var i in $scope.cpUserObj.list.data) {
 					if ($scope.cpUserObj.list.data[i]._id == dataRow._id) {
-						$scope.cpUserObj.list.splice(i, 1);
+						$scope.cpUserObj.list.data.splice(i, 1);
 					}
 				}
 			});

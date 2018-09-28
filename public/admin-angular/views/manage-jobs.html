@@ -17,11 +17,11 @@
 			        <li class="nav-item mr-10">
 			            <div class="pt-2">Job Filter</div>
 			        </li>
-			        <li class="nav-item mr-10">
-			            <select class="form-control">
-			            	<option>Active</option>
-			            	<option>Deactive</option>
-			            	<option>Closed</option>
+			        <li class="nav-item mr-10" ng-init="jobMgmtObj.list.filter = '2'">
+			            <select class="form-control" ng-model="jobMgmtObj.list.filter">
+			            	<option value="2">Active</option>
+			            	<option value="1">Deactive</option>
+			            	<!-- <option>Closed</option> -->
 			            </select>
 			        </li>
 			    </ul>
@@ -36,7 +36,7 @@
 				        </tr>
 				    </thead>
 				    <tbody>
-				        <tr ng-repeat="jobRow in jobMgmtObj.list.data | orderBy: '-createdAt' | filter: { jobTitle: jobMgmtObj.list.searchjob }">
+				        <tr ng-repeat="jobRow in jobMgmtObjFilter = (jobMgmtObj.list.data | orderBy: '-createdAt' | filter: { jobTitle: jobMgmtObj.list.searchjob, status: jobMgmtObj.list.filter })">
 				            <td>{{jobRow.jobTitle}}</td>
 				            <td>
 								<select class="form-control" ng-model="jobRow.status" ng-change="jobMgmtObj.edit.activeJob(jobRow)">
@@ -50,9 +50,16 @@
 				            </td>
 				            <td>
 				                <div><i ng-click="jobMgmtObj.edit.openModal(jobRow)" class="fa fa-pencil-square-o pointer ml-10" aria-hidden="true"></i>
-				                <i ng-click="jobMgmtObj.delete.openModal(jobRow, false)" ng-if="jobRow.confirm" class="fa fa-trash-o pointer ml-10 text-danger" aria-hidden="true"></i>
-				                <i ng-click="jobMgmtObj.delete.openModal(jobRow, true)" ng-if="!jobRow.confirm" class="fa fa-trash-o pointer ml-10" aria-hidden="true"></i>
+				                <i ng-click="jobMgmtObj.delete.openModal(jobRow, false)" ng-if="jobRow.isDelete" class="fa fa-trash-o pointer ml-10 text-danger" aria-hidden="true"></i>
+				                <i ng-click="jobMgmtObj.delete.openModal(jobRow, true)" ng-if="!jobRow.isDelete" class="fa fa-trash-o pointer ml-10" aria-hidden="true"></i>
 				            </td>
+				        </tr>
+				        <tr ng-if="!jobMgmtObjFilter.length">
+				        	<td colspan="4">
+					        	<div class="text-center">
+					        		<h5>No data!</h5>
+					        	</div>
+				        	</td>
 				        </tr>
 				    </tbody>
 				</table>

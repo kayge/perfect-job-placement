@@ -10,7 +10,8 @@ var ctrl = {
     common: require('../controllers/common'),
     siteMgmt: require('../controllers/siteMgmt'),
     users: require('../controllers/users'),
-    adminUsers: require('../controllers/adminUsers')
+    adminUsers: require('../controllers/adminUsers'),
+    suerDashboard: require('../controllers/userDashboardController')
 };
 
 
@@ -52,6 +53,11 @@ router.get('/api/admin/get/dashboard-counts', ctrl.adminUsers.getDbCount);
 // Other routes
 router.post('/api/site/get-jobs', ctrl.siteMgmt.getCurrentJobs);
 router.post('/api/site/get-jobsby-filter', ctrl.siteMgmt.getJobsByFilter);
+
+
+
+// User dashboars
+router.post('/api/v1/get-client-jobs', ctrl.suerDashboard.getAllJobs);
 
 
 

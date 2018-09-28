@@ -47,7 +47,7 @@
 						<div class="form-group">
 							<label>Select Cource</label>
 							<div class="multi-select-span" ng-if="dbObj.postObj.model.qualification">
-								<span class="pointer" ng-repeat="row in dbObj.comObj.qualification" ng-if="row.qualifyIn == dbObj.postObj.model.qualification" ng-click="g.adminData.multiSelect(dbObj.postObj.model.department, row.name)">
+								<span class="pointer" ng-repeat="row in globalvarObj.qualification" ng-if="row.qualifyIn == dbObj.postObj.model.qualification" ng-click="g.adminData.multiSelect(dbObj.postObj.model.department, row.name)">
 									<span class="position-relative">
 										<span class="badge badge-pill badge-primary">
 											<span ng-if="dbObj.postObj.model.department.indexOf(row.name) != -1"><i class="fa fa-check-square" aria-hidden="true"></i></span> {{row.name}}
@@ -133,7 +133,7 @@
 							<label>Job City</label>
 							<select class="form-control" name="addjobCity" ng-model="dbObj.postObj.model.jobCity" ng-required="true" ng-class="{ 'text-error': dbObj.postObj.isSubmited && addnewJobForm.addjobCity.$error.required }">
 								<option value="">--- Select City ---</option>
-								<option ng-repeat="row in dbObj.comObj.cites" ng-if="row.status" value="{{row._id}}">{{row.city}}</option>
+								<option ng-repeat="row in globalvarObj.cites" ng-if="row.status" value="{{row._id}}">{{row.city}}</option>
 							</select>
 						</div>
 					</div>
@@ -265,7 +265,7 @@
 						<div class="form-group">
 							<label>Select Cource</label>
 							<div class="multi-select-span" ng-if="jobMgmtObj.edit.model.qualification">
-								<span class="pointer" ng-repeat="row in jobMgmtObj.qualifications" ng-if="row.qualifyIn == jobMgmtObj.edit.model.qualification" ng-click="g.adminData.multiSelect(jobMgmtObj.edit.model.department, row.name)">
+								<span class="pointer" ng-repeat="row in globalvarObj.qualification" ng-if="row.qualifyIn == jobMgmtObj.edit.model.qualification" ng-click="g.adminData.multiSelect(jobMgmtObj.edit.model.department, row.name)">
 									<span class="position-relative">
 										<span class="badge badge-pill badge-primary">
 											<span ng-if="jobMgmtObj.edit.model.department.indexOf(row.name) != -1"><i class="fa fa-check-square" aria-hidden="true"></i></span> {{row.name}}
@@ -478,7 +478,7 @@
 					<div class="col-md-6">
 						<div class="form-group">
 							<label>Mobile Number</label>
-							<input type="number" class="form-control" name="mobile" ng-model="dbObj.rgUser.model.mobile" placeholder="Mobile number" ng-required="true" ng-class="{ 'text-error': dbObj.rgUser.isSubmited && registerCandidateFrom.mobile.$error.required }" maxlength="10" readonly="">
+							<input type="number" class="form-control" name="mobile" ng-model="dbObj.rgUser.model.mobile" placeholder="Mobile number" ng-required="true" ng-class="{ 'text-error': dbObj.rgUser.isSubmited && registerCandidateFrom.mobile.$error.required }" maxlength="10">
 						</div>
 					</div>
 					<div class="col-md-6">
@@ -514,7 +514,7 @@
 
 							<select class="form-control" name="department" ng-model="dbObj.rgUser.model.department" ng-required="true" ng-class="{ 'text-error': dbObj.rgUser.isSubmited && registerCandidateFrom.department.$error.required }">
 								<option value="">--- Select Department ---</option>
-								<option ng-repeat="row in dbObj.comObj.qualification" value="{{row._id}}" ng-if="row.qualifyIn == dbObj.rgUser.model.qualification">{{row.name}}</option>
+								<option ng-repeat="row in globalvarObj.qualification" value="{{row._id}}" ng-if="row.qualifyIn == dbObj.rgUser.model.qualification">{{row.name}}</option>
 							</select>
 						</div>
 					</div>
@@ -522,8 +522,8 @@
 						<div class="form-group">
 							<label>Area Of Interest</label>
 
-							<div class="multi-select-span" ng-if="dbObj.rgUser.model.department">
-								<span class="pointer" ng-repeat="row in dbObj.comObj.areaOfInterest" ng-if="row.department == dbObj.rgUser.model.department" ng-click="g.adminData.multiSelect(dbObj.rgUser.model.areaOfInterest, row.title)">
+							<div class="multi-select-span" ng-if="dbObj.rgUser.model.qualification">
+								<span class="pointer" ng-repeat="row in globalvarObj.areaOfInterest" ng-if="row.department == dbObj.rgUser.model.qualification" ng-click="g.adminData.multiSelect(dbObj.rgUser.model.areaOfInterest, row.title)">
 									<span class="position-relative">
 										<span class="badge badge-pill badge-primary">
 											<span ng-if="dbObj.rgUser.model.areaOfInterest.indexOf(row.title) != -1"><i class="fa fa-check-square" aria-hidden="true"></i></span> {{row.title}}
@@ -531,7 +531,7 @@
 									</span>
 								</span>
 							</div>
-							<div class="multi-select-span" ng-if="!dbObj.rgUser.model.department">
+							<div class="multi-select-span" ng-if="!dbObj.rgUser.model.qualification">
 								<span>Select Area Of Interest</span>
 							</div>
 						</div>
@@ -553,7 +553,7 @@
 							<label>City</label>
 							<select class="form-control" name="jobCity" ng-model="dbObj.rgUser.model.jobCity" ng-required="true" ng-class="{ 'text-error': dbObj.rgUser.isSubmited && registerCandidateFrom.jobCity.$error.required }">
 								<option value="">--- Select City ---</option>
-								<option ng-repeat="row in dbObj.comObj.cites" ng-if="row.status" value="{{row._id}}">{{row.city}}</option>
+								<option ng-repeat="row in globalvarObj.cites" ng-if="row.status" value="{{row._id}}">{{row.city}}</option>
 							</select>
 						</div>
 					</div>
@@ -655,7 +655,7 @@
 							</label>
 							<select class="form-control" name="jobselect" ng-model="dbObj.rgUser.model.jobId">
 								<option value="">--- Select Job ---</option>
-								<option ng-repeat="jobs in dbObj.comObj.activeJobs" value="{{jobs._id}}">{{jobs.jobTitle}}</option>
+								<option ng-repeat="jobs in globalvarObj.activeJobs" value="{{jobs._id}}">{{jobs.jobTitle}}</option>
 							</select>
 						</div>
 					</div>

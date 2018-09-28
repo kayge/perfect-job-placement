@@ -13,6 +13,25 @@
 					<h4 class="text-white mt-30">
 						{{comnObj.siteSettings.data.appTagline || 'Place Yourself At Right Place'}}
 					</h4>
+					<div class="footer-bottom" style="padding-top: 20px;">
+                        <div class="footer-social text-center">
+                            <a href="https://plus.google.com/u/0/100247083268164825478" target="_blank">
+                                <i class="fa fa-google-plus" aria-hidden="true"></i>
+                            </a>
+                            <a href="https://www.facebook.com/PerfectJobPlacemmentRajkot/" target="_blank">
+                                <i class="fa fa-facebook" aria-hidden="true"></i>
+                            </a>
+                            <a href="https://www.instagram.com/perfect_job_rajkot/" target="_blank">
+                               <i class="fa fa-instagram" aria-hidden="true"></i>
+                            </a>
+                            <a href="https://www.linkedin.com/in/perfect-job-placement-rajkot-748417164/" target="_blank">
+                                <i class="fa fa-linkedin" aria-hidden="true"></i>
+                            </a>
+                            <a href="https://www.justdial.com/Rajkot/Perfect-Job-Placement-Rajkot-Opposite-Amarnath-Temple-Garden-150-Feet-Ring-Road/0281PX281-X281-180524165329-C9D9_BZDET?xid=UmFqa290IFBlcmZlY3QgSm9iIFBsYWNlbWVudCBSYWprb3Q=" target="_blank">
+                                Jd
+                            </a>
+                        </div>
+                    </div>
 				</div>
 			</div>
 		</div>
@@ -49,7 +68,7 @@
 			<div class="row d-flex justify-content-center">
 				<div class="menu-content pb-30 col-lg-10">
 					<div class="title text-center">
-						<h1 class="mb-10">Recent job opening</h1>
+						<h1 class="mb-10">Recent Job Opening</h1>
 						<p><strong>"Get your dream job."</strong></p>
 					</div>
 				</div>
@@ -199,14 +218,14 @@
 								<div class="titles">
 									<h4>{{jobRow.jobTitle}} - <span class="text-orange f-w-400 font-size-16">{{g.adminData.candidateMinExp[jobRow.cexpRequired]}}</span></h4>
 									<h6><span class="f-w-600">Position:</span> {{jobRow.jobPosition}}</h6>
-									<h6><span class="f-w-600"><i class="fa fa-inr" aria-hidden="true"></i> Salary:</span> {{jobRow.salary}}</h6>
+									<h6><span class="f-w-600"><i class="fa fa-inr" aria-hidden="true"></i> Salary:</span> {{jobRow.salary}} <span class="f-w-600 text-orange">(Monthly)</span></h6>
 									<h6><span class="f-w-600"><i class="fa fa-map-marker" aria-hidden="true"></i> City:</span> {{jobRow.cityName}} - ({{jobRow.jobLocation}})</h6>
 									<h6>
 										<span class="f-w-600">Required Qualification:</span> {{g.adminData.categoryObject[jobRow.qualification]}}
 										<span ng-if="jobRow.department.length"> - <span ng-repeat="drow in jobRow.department" class="f-w-600 text-orange">[{{drow}}] </span></span>
 									</h6>
 
-									<button type="button" class="btn btn-primary btn-sm ic-btn" ng-click="homeObj.jobObj.preview.open(jobRow)">job Detail</button>
+									<button type="button" class="btn btn-primary btn-sm ic-btn" ng-click="homeObj.jobObj.preview.open(jobRow)">View Job Detail</button>
 									<button type="button" class="btn btn-secondary btn-sm ic-btn" ng-click="homeObj.jobObj.applyjob.openModal(jobRow)">Apply Job</button>
 								</div>
 							</div>
@@ -266,7 +285,7 @@
 						<div class="buttons">
 							<i class="fa fa-apple" aria-hidden="true"></i>
 							<div class="desc">
-								<a class="pointer" data-toggle="tooltip" title="Comming Soon..." data-placement="top">
+								<a class="pointer" data-toggle="tooltip" title="Comming Soon..." data-placement="top" ng-click="homeObj.cobj.commingSoon()">
 									<p>
 										<span>Available</span> <br>
 										on App Store
@@ -277,7 +296,7 @@
 						<div class="buttons">
 							<i class="fa fa-android" aria-hidden="true"></i>
 							<div class="desc">
-								<a class="pointer" data-toggle="tooltip" title="Comming Soon..." data-placement="top">
+								<a class="pointer" data-toggle="tooltip" title="Comming Soon..." data-placement="top" ng-click="homeObj.cobj.commingSoon()">
 									<p>
 										<span>Available</span> <br>
 										on Play Store

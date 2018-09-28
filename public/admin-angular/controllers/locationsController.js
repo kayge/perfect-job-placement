@@ -1,6 +1,10 @@
 appModule.controller('LocationController', ['$scope', '$http', '$location', '$uibModal', '$stateParams', '$rootScope', '$timeout', '$state', 'icdb', 'alertService',
     function($scope, $http, $location, $uibModal, $stateParams, $rootScope, $timeout, $state, icdb, alertService) {
 
+
+
+    	$rootScope.g.adminData = globalObj;
+
 		// ---------------------- Job Locations ------------------------------------
 		$scope.jl = {};
 
@@ -106,25 +110,22 @@ appModule.controller('LocationController', ['$scope', '$http', '$location', '$ui
 		// ---------------- Init section ----------------
 		$scope.jl.aofintObj.list = {};
 		$scope.jl.aofintObj.list.loading = false;
-		$scope.jl.aofintObj.data = [];
-		$scope.jl.aofintObj.area = [];
+		$scope.jl.aofintObj.list.data = [];
+
 
 		$scope.jl.aofintObj.init = function() {
 
 			$scope.jl.aofintObj.list.loading = true;
 
 			icdb.get('AreaOfInterest', function(result) {
-				$scope.jl.aofintObj.data = result;
-		        
-		        icdb.get('Qualifications', function(result) {
-					$scope.jl.aofintObj.area = result;
+				$scope.jl.aofintObj.list.data = result;
 
-					$timeout(function() {
-						$scope.jl.aofintObj.list.loading = false;
-					}, 10);
-		        });
+		   		$timeout(function() {
+					$scope.jl.aofintObj.list.loading = false;
+				}, 10);
 	        });
 		}
+
 		$scope.jl.aofintObj.init();
 
 
@@ -133,9 +134,11 @@ appModule.controller('LocationController', ['$scope', '$http', '$location', '$ui
 	    $scope.jl.aofintObj.add.model = {};
 
 		$scope.jl.aofintObj.add.submit = function() {
-			icdb.insert('AreaOfInterest', $scope.jl.aofintObj.add.model, function(result) {
-				$scope.jl.aofintObj.add.model = {};
-				$scope.jl.aofintObj.init();
+
+			icdb.insert('AreaOfInterest', $scope.jl.aofintObj.add.model, function(response) {
+				$scope.jl.aofintObj.add.model = {};				
+				$scope.jl.aofintObj.list.data.push(response.result);
+
 	            alertService.flash('success', 'Area Of Interest has been created successfully.');
 	        });
 		}
@@ -149,20 +152,26 @@ appModule.controller('LocationController', ['$scope', '$http', '$location', '$ui
 		}
 
 		$scope.jl.aofintObj.edit.submit = function(row) {
+
 			icdb.update('AreaOfInterest', row._id, {
 	            city: row.city
-	        }, function(result) {
+	        }, function(response) {
 				row.isEdit = false;
-				$scope.jl.aofintObj.init();
+
+				for (var i in $scope.jl.aofintObj.list.data) {
+					if ($scope.jl.aofintObj.list.data[i]._id == row._id) {
+						$scope.jl.aofintObj.list.data[i].city = row.city;
+					}
+				}
+
 	            alertService.flash('success', 'Area Of Interest has been updated successfully.');
 	        });
 		}
 
 		$scope.jl.aofintObj.edit.activeQa = function(row, status) {
 			row.status = status;
-			icdb.update('AreaOfInterest', row._id, row, function(result) {
+			icdb.update('AreaOfInterest', row._id, row, function(response) {
 
-				$scope.jl.aofintObj.init();
 				if (status) {
 	            	alertService.flash('success', 'Area Of Interest has been Activated successfully.');
 				} else {
@@ -181,9 +190,15 @@ appModule.controller('LocationController', ['$scope', '$http', '$location', '$ui
 				return;
 			}
 
-			icdb.remove('AreaOfInterest', row._id, function(result) {
+			icdb.remove('AreaOfInterest', row._id, function(response) {
 				row.confirm = false;
-				$scope.jl.aofintObj.init();
+
+				for (var i in $scope.jl.aofintObj.list.data) {
+					if ($scope.jl.aofintObj.list.data[i]._id == row._id) {
+						$scope.jl.aofintObj.list.data.splice(i, 1);
+					}
+				}
+
 	            alertService.flash('success', 'Area Of Interest has been deleted successfully.');
 	        });
 		}

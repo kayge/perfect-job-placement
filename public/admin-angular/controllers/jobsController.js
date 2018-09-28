@@ -14,23 +14,15 @@ appModule.controller('JobMgmtController', ['$scope', '$http', '$location', '$uib
 		$scope.jobMgmtObj.list.init = function() {
 			$scope.jobMgmtObj.list.loading = true;
 
-			icdb.get('JobsBazaar', function(result) {
-				$scope.jobMgmtObj.list.data = result;
-				
-				icdb.get('JobLocations', function(result) {
-					$scope.jobMgmtObj.cities = [];
-					$scope.jobMgmtObj.cities = result;
-					
-					icdb.get('Qualifications', function(result) {
-						$scope.jobMgmtObj.qualifications = [];
-						$scope.jobMgmtObj.qualifications = result;
+			icdb.getCondition('JobsBazaar', {
+				status: { $ne: 3 }
+			}, function(response) {
+				$scope.jobMgmtObj.list.data = response;
 
-						$timeout(function() {
-							$scope.jobMgmtObj.list.loading = false;
-						}, 10);
-					});
-				});
-			});
+				$timeout(function() {
+					$scope.jobMgmtObj.list.loading = false;
+				}, 10);
+	        });
 		}
 
 
@@ -64,7 +56,7 @@ appModule.controller('JobMgmtController', ['$scope', '$http', '$location', '$uib
 
 			$scope.jobMgmtObj.edit.isReqSent = true;
 
-			icdb.update('JobsBazaar', $scope.jobMgmtObj.edit.model._id, $scope.jobMgmtObj.edit.model, function(result) {
+			icdb.update('JobsBazaar', $scope.jobMgmtObj.edit.model._id, $scope.jobMgmtObj.edit.model, function(response) {
 				$scope.jobMgmtObj.edit.closeModal();
 				alertService.flash('success', 'Job has been created successfully.');
 			});
@@ -73,7 +65,7 @@ appModule.controller('JobMgmtController', ['$scope', '$http', '$location', '$uib
 		$scope.jobMgmtObj.edit.activeJob = function(row) {
 			icdb.update('JobsBazaar', row._id,{
 				status: row.status
-			}, function(result) {
+			}, function(response) {
 				$scope.jobMgmtObj.edit.closeModal();
 				alertService.flash('success', 'Job status has been updates successfully.');
 			});
@@ -83,8 +75,19 @@ appModule.controller('JobMgmtController', ['$scope', '$http', '$location', '$uib
 
 		// -------------- Delete Job -------------------
 		$scope.jobMgmtObj.delete = {};
-		$scope.jobMgmtObj.delete.openModal = function(status) {
-			
+		$scope.jobMgmtObj.delete.openModal = function(row, status) {
+			if (status) {
+				row.isDelete = true;
+				return;
+			}
+
+			icdb.remove('JobsBazaar', row._id, function(response) {
+				for (var i in $scope.jobMgmtObj.list.data) {
+					if ($scope.jobMgmtObj.list.data[i]._id == row._id) {
+						$scope.jobMgmtObj.list.data.splice(i, 1);
+					}
+				}
+			});
 		}
 
 	}

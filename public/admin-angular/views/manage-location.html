@@ -67,12 +67,11 @@
 					<div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
 						<h3 class="h3">Area Of Interest</h3>
 					</div>
-
 					<ul class="nav nav-pills mb-15" ng-if="!jl.aofintObj.list.loading">
 						<li class="nav-item mr-10">
 						    <select class="form-control" ng-model="jl.aofintObj.add.model.department">
 						    	<option value="">-- Select Depertment --</option>
-								<option ng-repeat="row in jl.aofintObj.area" value="{{row._id}}">{{row.name}}</option>
+								<option ng-repeat="row in g.adminData.categoryArray" value="{{row.key}}">{{row.name}}</option>
 							</select>
 						</li>
 						<li class="nav-item mr-10">
@@ -83,27 +82,27 @@
 						</li>
 				    </ul>
 
-				    <table class="table table-bordered table-striped mb-0" ng-if="jl.aofintObj.data.length && !jl.aofintObj.list.loading">
+				    <table class="table table-bordered table-striped mb-0" ng-if="jl.aofintObj.list.data.length && !jl.aofintObj.list.loading">
 					    <thead>
 					        <tr>
 					            <th>key</th>
 					            <th>Title</th>
-					            <th>In Depertment</th>
+					            <th>Area</th>
 					            <th>Action</th>
 					        </tr>
 					    </thead>
 					    <tbody>
-					        <tr ng-repeat="row in jl.aofintObj.data | orderBy: 'title'">
+					        <tr ng-repeat="row in jl.aofintObj.list.data | orderBy: 'title'">
 					            <td>{{row._id}}</td>
 					            <td>
 					            	<div ng-if="!row.isEdit">{{row.title}}</div>
 					            	<div ng-if="row.isEdit"><input type="text" ng-model="row.title" class="form-control" /></div>
 					            </td>
 					            <td>
-				            		<div ng-if="!row.isEdit"><span ng-repeat="ainRow in jl.aofintObj.area" ng-if="ainRow._id == row.department">{{ainRow.name}}</span></div>
+				            		<div ng-if="!row.isEdit">{{g.adminData.categoryObject[row.department]}}</div>
 					            	<div ng-if="row.isEdit">
 					            		<select class="form-control" ng-model="row.department">
-						            		<option ng-repeat="row in jl.aofintObj.area" value="{{row._id}}">{{row.name}}</option>
+						            		<option ng-repeat="row in g.adminData.categoryArray" value="{{row.key}}">{{row.name}}</option>
 						            	</select>
 					            	</div>
 					        	</td>
@@ -121,7 +120,7 @@
 					    </tbody>
 					</table>
 
-					<div ng-if="!jl.list.data.length && !jl.aofintObj.list.loading" class="text-center">
+					<div ng-if="!jl.aofintObj.list.data.length && !jl.aofintObj.list.loading" class="text-center">
 						<h4>No data</h4>
 					</div>
 
