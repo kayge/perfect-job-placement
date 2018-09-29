@@ -27,8 +27,6 @@ appModule.controller('AdminController', ['$scope', '$http', '$location', '$uibMo
 			}, function(response) {
 				$rootScope.globalvarObj.activeJobs = response;
 	        });
-
-	        console.log($rootScope.globalvarObj);
 		}
 
 		if ($rootScope.g.loggedUser && $rootScope.g.loggedUser._id) {

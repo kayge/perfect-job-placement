@@ -3,46 +3,66 @@
 appModule.controller('HomeController', ['$scope', '$http', '$location', '$uibModal', '$stateParams', '$rootScope', '$timeout', '$state', 'icdb', 'alertService',
     function($scope, $http, $location, $uibModal, $stateParams, $rootScope, $timeout, $state, icdb, alertService) {
 
+        
+        //
         $scope.homeObj = {};
     	$scope.homeObj.cobj = {};
+
+        //
         $rootScope.g.adminData = globalObj;
 
+
+
+
+
+        // ------------------- Common Section ------------------------
 
         $scope.homeObj.cobj.commingSoon = function() {
             $('#comming-soon').modal('show');
         }
 
-
-
-        // -------------- Init Site Settings -------------------
-        $scope.homeObj.jobObj = {};
-        $scope.homeObj.jobObj.list = {};
         
-        $scope.homeObj.jobObj.list.isLoading = false;
-        $scope.homeObj.jobObj.skip = 0;
-        $scope.homeObj.jobObj.data = [];
-        var skip = 0;
 
-        $scope.homeObj.jobObj.init = function() {
-            $scope.homeObj.jobObj.list.isLoading = true;
 
-            $http.post('/api/site/get-jobs', {
-                skip: skip
-            }).success(function(response) {
-                skip = skip + 20;
-                $scope.homeObj.jobObj.data = response.result;
-                $scope.homeObj.jobObj.totalJobs = response.count;
-                $scope.homeObj.jobObj.jobsByLocation = response.jobsByLocation;
-                
-                $timeout(function() {
-                    $scope.homeObj.jobObj.list.isLoading = false;
-                }, 200);
-            });
+        //
+        $scope.homeObj.cobj.filter = {
+            isActive: 3
+        };
+
+        //
+        $scope.homeObj.cobj.getFilterData = function(key) {
+
+            if (key == 3) {
+                $scope.homeObj.cobj.filter = {
+                    isActive: 3
+                };
+                return;
+            }
+
+            $scope.homeObj.cobj.filter = {
+                isActive: key,
+                filterObj: {
+                    jobWorkType: key
+                }
+            };
         }
 
 
 
-        // -------------- Init Site Settings -------------------
+
+
+
+
+
+
+
+
+        // ---------------------------------------------------------------------
+        // Init site settings
+        // ---------------------------------------------------------------------
+
+
+
         $scope.homeObj.jobjByFilter = {};
         $scope.homeObj.jobjByFilter.list = {};
         
@@ -81,39 +101,97 @@ appModule.controller('HomeController', ['$scope', '$http', '$location', '$uibMod
 
 
 
-        // ----------------------------
-        $scope.homeObj.jobObj.list.filter = {
-            isActive: 3
-        };
 
-        $scope.homeObj.getFilterData = function(key) {
 
-            if (key == 3) {
-                $scope.homeObj.jobObj.list.filter = {
-                    isActive: 3
-                };
-                return;
-            }
 
-            $scope.homeObj.jobObj.list.filter = {
-                isActive: key,
-                filterObj: {
-                    jobWorkType: key
+
+
+
+
+
+        // ---------------------------------------------------------------------
+        // Get jobs
+        // ---------------------------------------------------------------------
+
+
+        $scope.homeObj.jobObj = {};
+        $scope.homeObj.jobObj.list = {};
+        
+        $scope.homeObj.jobObj.list.isLoading = false;
+        $scope.homeObj.jobObj.list.data = [];
+        var skip = 0;
+
+        $scope.homeObj.jobObj.init = function() {
+            $scope.homeObj.jobObj.list.isLoading = true;
+
+            $http.post('/api/site/get-jobs', {
+                skip: skip
+            }).success(function(response) {
+                skip = skip + 20;
+                
+                $scope.homeObj.jobObj.list.data = response.result;
+                $scope.homeObj.jobObj.totalJobs = response.count;
+                $scope.homeObj.jobObj.jobsByLocation = response.jobsByLocation;
+                
+                $timeout(function() {
+                    $scope.homeObj.jobObj.list.isLoading = false;
+                }, 200);
+            });
+        }
+
+
+        $scope.homeObj.jobObj.loadMore = function() {
+            $scope.homeObj.jobObj.list.isLoadMore = true;
+
+            $http.post('/api/site/get-jobs', {
+                skip: skip
+            }).success(function(response) {
+                skip = skip + 20;
+
+                if (response.result && response.result.length) {
+                    for (var r in response.result) {
+                        $scope.homeObj.jobObj.list.data.push(response.result[r]);
+                    }
                 }
-            };
+
+                $scope.homeObj.jobObj.totalJobs = response.count;
+
+                if (response.jobsByLocation && response.jobsByLocation.length) {
+                    for (var r in response.jobsByLocation) {
+                        $scope.homeObj.jobObj.jobsByLocation.push(response.jobsByLocation[r]);
+                    }
+                }
+                
+                $timeout(function() {
+                    $scope.homeObj.jobObj.list.isLoadMore = false;
+                }, 200);
+            });
         }
 
 
 
+        
 
-        // ------------ View job preview --------------
+
+
+        
+
+
+
+        // ---------------------------------------------------------------------
+        // Get jobs preview
+        // ---------------------------------------------------------------------
+
+
         $scope.homeObj.jobObj.preview = {};
         $scope.homeObj.jobObj.preview.data = {};
+
 
         $scope.homeObj.jobObj.preview.open = function(row) {
             $scope.homeObj.jobObj.preview.data = angular.copy(row);
             $('#job-preview').modal('show');
         }
+
 
         $scope.homeObj.jobObj.preview.close = function(row) {
             $scope.homeObj.jobObj.preview.data = {};
@@ -122,16 +200,29 @@ appModule.controller('HomeController', ['$scope', '$http', '$location', '$uibMod
 
 
 
-        // -------------- Register User -------------------
+
+
+
+
+
+
+
+
+
+        // ---------------------------------------------------------------------
+        // Apply for job
+        // ---------------------------------------------------------------------
+
+
         $scope.homeObj.jobObj.applyjob = {};
         $scope.homeObj.jobObj.applyjob.model = {};
 
-        icdb.get('Qualifications', function(result) {
-            $scope.homeObj.jobObj.applyjob.qualification = result;
+        icdb.get('Qualifications', function(response) {
+            $scope.homeObj.jobObj.applyjob.qualification = response;
         });
 
-        icdb.get('JobLocations', function(result) {
-            $scope.homeObj.jobObj.applyjob.cites = result;
+        icdb.get('JobLocations', function(response) {
+            $scope.homeObj.jobObj.applyjob.cites = response;
         });
 
 
@@ -147,6 +238,7 @@ appModule.controller('HomeController', ['$scope', '$http', '$location', '$uibMod
             $('#apply-for-job').modal('hide');
             $('#confirm-contact').modal('hide');
         }
+
 
 
         $scope.homeObj.jobObj.applyjob.confirmUnique = {};
@@ -186,6 +278,7 @@ appModule.controller('HomeController', ['$scope', '$http', '$location', '$uibMod
         }
 
 
+
         $scope.homeObj.jobObj.applyjob.isSubmited = false;
         $scope.homeObj.jobObj.applyjob.isReqSent = false;
 
@@ -208,6 +301,11 @@ appModule.controller('HomeController', ['$scope', '$http', '$location', '$uibMod
                 });
             });
         }
+
+
+
+
+
 
 	}
 ]);

@@ -31,7 +31,7 @@ exports.getCurrentJobs = function(req, res) {
 
 	jobsModel.find({
 		status: 2
-	}).skip(req.body.skip).limit(20).exec(function(err, jobResponse) {
+	}).sort({createdAt: -1}).skip(req.body.skip).limit(20).exec(function(err, jobResponse) {
 
 		if (jobResponse && jobResponse.length) {
 			jobResponse = JSON.parse(JSON.stringify(jobResponse));

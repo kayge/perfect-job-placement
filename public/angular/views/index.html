@@ -78,7 +78,7 @@
 				<div class="col-md-12">
 					<div id="carouselExampleControls" class="carousel slide" data-ride="carousel" ng-if="!homeObj.jobObj.list.isLoading">
 						<div class="carousel-inner recent-job-slider">
-							<div class="carousel-item" ng-class="{ 'active': $index == 0 }" ng-repeat="sJobRow in homeObj.jobObj.data| limitTo:3 | orderBy: '-createdAt'">
+							<div class="carousel-item" ng-class="{ 'active': $index == 0 }" ng-repeat="sJobRow in homeObj.jobObj.list.data| limitTo:3 | orderBy: '-createdAt'">
 								<div class="item-1 text-center pb-3">
 									<i ng-if="sJobRow.jobCategory == '1'" class="theme-color fa fa-industry font-50" aria-hidden="true"></i>
 									<i ng-if="sJobRow.jobCategory == '2'" class="theme-color fa fa-laptop font-50" aria-hidden="true"></i>
@@ -196,12 +196,16 @@
 			<div class="row" ng-if="!homeObj.jobObj.list.isLoading">
 				<div class="col-lg-8 post-list">
 					<ul class="cat-list">
-						<li ng-click="homeObj.getFilterData(1)" ng-class="{'active-btn': homeObj.jobObj.list.filter.isActive == 1}"><a class="pointer">Full Time</a></li>
-						<li ng-click="homeObj.getFilterData(2)" ng-class="{'active-btn': homeObj.jobObj.list.filter.isActive == 2}"><a class="pointer">part Time</a></li>
-						<li ng-click="homeObj.getFilterData(3)" ng-class="{'active-btn': homeObj.jobObj.list.filter.isActive == 3}"><a class="pointer">Both</a></li>
+						<li ng-click="homeObj.cobj.getFilterData(1)" ng-class="{'active-btn': homeObj.cobj.filter.isActive == 1}"><a class="pointer">Full Time</a></li>
+						<li ng-click="homeObj.cobj.getFilterData(2)" ng-class="{'active-btn': homeObj.cobj.filter.isActive == 2}"><a class="pointer">part Time</a></li>
+						<li ng-click="homeObj.cobj.getFilterData(3)" ng-class="{'active-btn': homeObj.cobj.filter.isActive == 3}"><a class="pointer">Both</a></li>
 					</ul>
+					
+					<div class="cat-list">
+						<h6 class="text-center text-orange">You are watching ({{homeObj.jobObj.totalJobs}} / {{homeObj.jobObj.list.data.length}}) jobs</h6>
+					</div>
 
-					<div class="single-post position-relative" ng-repeat="jobRow in dataFilterObject = (homeObj.jobObj.data | filter: homeObj.jobObj.list.filter.filterObj) | orderBy: '-createdAt'">
+					<div class="single-post position-relative" ng-repeat="jobRow in dataFilterObject = (homeObj.jobObj.list.data | filter: homeObj.cobj.filter.filterObj) | orderBy: '-createdAt'">
 						<div class="row">
 							<span class="job-work-timing"><span ng-if="jobRow.jobWorkType != 3">{{g.adminData.jobWorkType[jobRow.jobWorkType]}}</span>
 							<span ng-if="jobRow.jobWorkType == 3">Part Time & Full Time</span></span>
@@ -214,6 +218,7 @@
 								<i ng-if="jobRow.jobCategory == '5'" class="theme-color mb-3 fa fa-building-o font-50" aria-hidden="true"></i>
 								<i ng-if="jobRow.jobCategory == '6'" class="theme-color mb-3 fa fa-question-circle-o font-50" aria-hidden="true"></i>
 							</div>
+
 							<div class="col-md-10">
 								<div class="titles">
 									<h4>{{jobRow.jobTitle}} - <span class="text-orange f-w-400 font-size-16">{{g.adminData.candidateMinExp[jobRow.cexpRequired]}}</span></h4>
@@ -235,8 +240,17 @@
 					<div class="text-center" ng-if="!dataFilterObject.length">
 						<h4>No data!</h4>
 					</div>
-		
-					<a class="text-uppercase loadmore-btn mx-auto d-block" ng-if="homeObj.jobObj.totalJobs > homeObj.jobObj.data.length">Load More job Posts</a>
+			
+					<div ng-if="homeObj.jobObj.list.isLoadMore" class="text-center loading-cn">
+						<h2>
+							<i class="fa fa-spinner fa-pulse fa-fw"></i>
+							<span class="sr-only">Loading...</span>
+						</h2>
+					</div>
+
+					<div ng-if="!homeObj.jobObj.list.isLoadMore">
+						<a class="text-uppercase loadmore-btn mx-auto d-block pointer primary-btn text-white" ng-if="homeObj.jobObj.totalJobs > homeObj.jobObj.list.data.length" ng-click="homeObj.jobObj.loadMore()">Load More job Posts</a>
+					</div>
 				</div>
 				
 				<div class="col-lg-4 sidebar">
@@ -282,10 +296,10 @@
 						“PERFECT JOB PLACEMENT, RAJKOT“ is the fastest growing organization which helps to find the best human resource to the organizations.
 					</p>
 					<div class="d-flex flex-row">
-						<div class="buttons">
+						<div class="buttons" ng-click="homeObj.cobj.commingSoon()">
 							<i class="fa fa-apple" aria-hidden="true"></i>
 							<div class="desc">
-								<a class="pointer" data-toggle="tooltip" title="Comming Soon..." data-placement="top" ng-click="homeObj.cobj.commingSoon()">
+								<a class="pointer" data-toggle="tooltip" title="Comming Soon..." data-placement="top">
 									<p>
 										<span>Available</span> <br>
 										on App Store
@@ -293,10 +307,10 @@
 								</a>
 							</div>
 						</div>
-						<div class="buttons">
+						<div class="buttons" ng-click="homeObj.cobj.commingSoon()">
 							<i class="fa fa-android" aria-hidden="true"></i>
 							<div class="desc">
-								<a class="pointer" data-toggle="tooltip" title="Comming Soon..." data-placement="top" ng-click="homeObj.cobj.commingSoon()">
+								<a class="pointer" data-toggle="tooltip" title="Comming Soon..." data-placement="top">
 									<p>
 										<span>Available</span> <br>
 										on Play Store

@@ -22,11 +22,21 @@ appModule.controller('UserController', ['$scope', '$http', '$location', '$uibMod
                 return;
             }
 
+
             $scope.uObj.cuObj.add.isReqSent = true;
 
             $http.post('/api/user/register', $scope.uObj.cuObj.add.model).then(function(response) {
 
                 if (response.data && response.data.status) {
+
+                    if (response.data.userExist) {
+                        $scope.uObj.cuObj.add.isSubmited = false;
+                        $scope.uObj.cuObj.add.isReqSent = false;
+
+                        alertService.flash('error', 'User already exist.');
+                        return;
+                    }
+
                     $scope.uObj.cuObj.add.isSubmited = false;
                     $scope.uObj.cuObj.add.isReqSent = false;
                     $scope.uObj.cuObj.add.model = {}

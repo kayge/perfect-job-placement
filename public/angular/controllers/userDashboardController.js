@@ -8,33 +8,36 @@ appModule.controller('UserDashboardController', ['$scope', '$http', '$location',
 
 
 
-    	//
+
+
+
+
+
+    	// ----------------------------------------------------------
+    	// Get jobs
+    	// ----------------------------------------------------------
+
     	$scope.udObj.jobObj = {};
 
 
     	// ------------ Manage Profile --------------
     	$scope.udObj.jobObj.list = {};
-    	$scope.udObj.jobObj.list.isLoading = false;
     	$scope.udObj.jobObj.list.data = [];
+    	$scope.udObj.jobObj.list.isLoading = false;
     	
     	$scope.udObj.jobObj.list.init = function() {
-
-    		// if ($scope.udObj.jobObj.list.data.length) {
-    		// 	return;
-    		// }
-
     		$scope.udObj.jobObj.list.isLoading = true;
 
-
        		$http.post('/api/v1/get-client-jobs', {
-       			skip: 0
+       			skip: 0,
+       			userId: $rootScope.g.loggedUser._id
        		}).success(function(response) {
-				console.log("result >>>>>", response);
+		
 				$scope.udObj.jobObj.list.data = response.jobs;
 
 				$timeout(function() {
 					$scope.udObj.jobObj.list.isLoading = false;
-				}, 500);
+				}, 10);
 			});
        	}
 
@@ -44,91 +47,11 @@ appModule.controller('UserDashboardController', ['$scope', '$http', '$location',
 
 
 
-       	// -------------- Create Job -------------------
-		// $scope.dbObj.postObj = {};
-		// $scope.dbObj.postObj.model = {};
-
-		// $scope.dbObj.postObj.openModal = function() {
-		// 	$scope.dbObj.postObj.model.jobWorkType = 1;
-		// 	$scope.dbObj.postObj.model.candidateType = 1;
-		// 	$scope.dbObj.postObj.model.salaryType = 1;
-		// 	$scope.dbObj.postObj.model.interviewDateFrom = new Date();
-		// 	$scope.dbObj.postObj.model.interviewDateTo = new Date();
-		// 	$scope.dbObj.postObj.model.requiredDoc = [];
-		// 	$scope.dbObj.postObj.model.department = [];
-		// 	$scope.dbObj.postObj.model.requiredDoc.push($rootScope.g.adminData.requiredDocuments[0]);
-		// 	$('#add-new-job').modal('show');
-		// }
-
-		// $scope.dbObj.postObj.closeModal = function() {
-		// 	$scope.dbObj.postObj.model = {};
-		// 	$scope.dbObj.postObj.isSubmited = false;
-		// 	$scope.dbObj.postObj.isReqSent = false;
-		// 	$('#add-new-job').modal('hide');
-		// }
-
-		// $scope.dbObj.postObj.isSubmited = false;
-		// $scope.dbObj.postObj.isReqSent = false;
-		// $scope.dbObj.postObj.submit = function(form) {
-
-		// 	if (!form.$valid) {
-		// 		$scope.dbObj.postObj.isSubmited = true;
-		// 		return;
-		// 	}
-
-		// 	$scope.dbObj.postObj.isReqSent = true;
-		// 	$scope.dbObj.postObj.model.userId = $rootScope.g.loggedUser._id;
-
-		// 	icdb.insert('JobsBazaar', $scope.dbObj.postObj.model, function(result) {
-		// 		$scope.dbObj.postObj.closeModal();
-	 //            alertService.flash('success', 'Job has been created successfully.');
-	 //        });
-		// }
 
 
-
-		// 		// -------------- Update Job -------------------
-		// $scope.jobMgmtObj.edit = {};
-		// $scope.jobMgmtObj.edit.model = {};
-
-		// $scope.jobMgmtObj.edit.openModal = function(row) {
-		// 	$scope.jobMgmtObj.edit.model = angular.copy(row);
-		// 	$scope.jobMgmtObj.edit.model.interviewDateFrom = new Date(row.interviewDateFrom);
-		// 	$scope.jobMgmtObj.edit.model.interviewDateTo = new Date(row.interviewDateTo);
-
-		// 	$('#update-job-data').modal('show');
-		// }
-
-		// $scope.jobMgmtObj.edit.closeModal = function() {
-		// 	$scope.jobMgmtObj.edit.model.model = {};
-		// 	$scope.jobMgmtObj.edit.isSubmited = false;
-		// 	$scope.jobMgmtObj.edit.isReqSent = false;
-		// 	$('#update-job-data').modal('hide');
-		// }
-
-		// $scope.jobMgmtObj.edit.isSubmited = false;
-		// $scope.jobMgmtObj.edit.isReqSent = false;
-		// $scope.jobMgmtObj.edit.submit = function(form) {
-
-		// 	if (!form.$valid) {
-		// 		$scope.jobMgmtObj.edit.isSubmited = true;
-		// 		return;
-		// 	}
-
-		// 	$scope.jobMgmtObj.edit.isReqSent = true;
-
-		// 	icdb.update('JobsBazaar', $scope.jobMgmtObj.edit.model._id, $scope.jobMgmtObj.edit.model, function(result) {
-		// 		$scope.jobMgmtObj.edit.closeModal();
-		// 		alertService.flash('success', 'Job has been created successfully.');
-		// 	});
-		// }
-
-
-
-
-
-
-
+       	// ----------------------------------------------------------
+    	// Manage profile data
+    	// ----------------------------------------------------------
 
 
     	// ------------ Manage Profile --------------
@@ -139,6 +62,7 @@ appModule.controller('UserDashboardController', ['$scope', '$http', '$location',
        	$scope.udObj.profileObj.init = function() {
        		$scope.udObj.profileObj.model = angular.copy($rootScope.g.loggedUser);
        	}
+
 
        	$scope.udObj.profileObj.submit = function(form) {
        		if (!form.$valid) {
@@ -186,5 +110,140 @@ appModule.controller('UserDashboardController', ['$scope', '$http', '$location',
 				alertService.flash('success', 'Password has been updated successfully.');
 			});
 		}
+
+
+
+
+
+
+
+
+
+
+
+
+		// ----------------------------------------------------------
+    	// Create new job
+    	// ----------------------------------------------------------
+
+
+		$scope.udObj.jobObj.add = {};
+		$scope.udObj.jobObj.add.model = {};
+
+		$scope.udObj.jobObj.add.openModal = function() {
+			$scope.udObj.jobObj.add.model.jobWorkType = 1;
+			$scope.udObj.jobObj.add.model.candidateType = 1;
+			$scope.udObj.jobObj.add.model.salaryType = 1;
+			$scope.udObj.jobObj.add.model.interviewDateFrom = new Date();
+			$scope.udObj.jobObj.add.model.interviewDateTo = new Date();
+			$scope.udObj.jobObj.add.model.requiredDoc = [];
+			$scope.udObj.jobObj.add.model.department = [];
+			$scope.udObj.jobObj.add.model.requiredDoc.push(globalObj.requiredDocuments[0]);
+
+			$('#create-new-job').modal('show');
+		}
+
+
+		$scope.udObj.jobObj.add.closeModal = function() {
+			$scope.udObj.jobObj.add.model = {};
+			$scope.udObj.jobObj.add.isSubmited = false;
+			$scope.udObj.jobObj.add.isReqSent = false;
+
+			$('#create-new-job').modal('hide');
+		}
+
+
+
+		$scope.udObj.jobObj.add.isSubmited = false;
+		$scope.udObj.jobObj.add.isReqSent = false;
+
+		$scope.udObj.jobObj.add.submit = function(form) {
+
+			if (!form.$valid) {
+				$scope.udObj.jobObj.add.isSubmited = true;
+				return;
+			}
+
+			if (!$rootScope.g.loggedUser._id) {
+				alertService.flash('error', 'Plase login to post job.');
+				return;
+			}
+
+			$scope.udObj.jobObj.add.isReqSent = true;
+			$scope.udObj.jobObj.add.model.userId = $rootScope.g.loggedUser._id;
+
+			icdb.insert('JobsBazaar', $scope.udObj.jobObj.add.model, function(result) {
+				$scope.udObj.jobObj.add.closeModal();
+	            alertService.flash('success', 'Job has been created successfully.');
+	        });
+		}
+
+
+
+		// -------------- Update Job -------------------
+		$scope.udObj.jobObj.edit = {};
+		$scope.udObj.jobObj.edit.model = {};
+
+		$scope.udObj.jobObj.edit.openModal = function(row) {
+			$scope.udObj.jobObj.edit.model = angular.copy(row);
+			$scope.udObj.jobObj.edit.model.interviewDateFrom = new Date(row.interviewDateFrom);
+			$scope.udObj.jobObj.edit.model.interviewDateTo = new Date(row.interviewDateTo);
+
+			$('#update-existing-job').modal('show');
+		}
+
+		$scope.udObj.jobObj.edit.closeModal = function() {
+			$scope.udObj.jobObj.edit.model.model = {};
+			$scope.udObj.jobObj.edit.isSubmited = false;
+			$scope.udObj.jobObj.edit.isReqSent = false;
+			$('#update-existing-job').modal('hide');
+		}
+
+		
+		$scope.udObj.jobObj.edit.isSubmited = false;
+		$scope.udObj.jobObj.edit.isReqSent = false;
+
+		$scope.udObj.jobObj.edit.submit = function(form) {
+
+			if (!form.$valid) {
+				$scope.udObj.jobObj.edit.isSubmited = true;
+				return;
+			}
+
+			$scope.udObj.jobObj.edit.isReqSent = true;
+
+			icdb.update('JobsBazaar', $scope.udObj.jobObj.edit.model._id, $scope.udObj.jobObj.edit.model, function(response) {
+				$scope.udObj.jobObj.edit.closeModal();
+				$scope.udObj.jobObj.list.data.push(response);
+				alertService.flash('success', 'Job has been created successfully.');
+			});
+		}
+
+
+
+		$scope.udObj.jobObj.delete = {};
+
+		$scope.udObj.jobObj.delete.submit = function(row, status) {
+
+			if (!status) {
+				row.isDelete = false;
+				return;
+			}
+
+			icdb.remove('JobsBazaar', row._id, function(response) {
+				for (var r in $scope.udObj.jobObj.list.data) {
+					if ($scope.udObj.jobObj.list.data[r]._id == row._id) {
+						$scope.udObj.jobObj.list.data.splice(r, 1);
+					}
+				}
+			});
+		}
+
+
+
+
+
+
+
 	}
 ]);

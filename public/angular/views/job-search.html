@@ -24,12 +24,12 @@
 			<div class="row justify-content-center d-flex" ng-show="!homeObj.jobjByFilter.list.isLoading">
 				<div class="col-lg-12 post-list" ng-if="homeObj.jobjByFilter.data.length">
 					<ul class="cat-list">
-						<li ng-click="homeObj.getFilterData(1)" ng-class="{'active-btn': homeObj.jobjByFilter.list.filter.isActive == 1}"><a class="pointer">Full Time</a></li>
-						<li ng-click="homeObj.getFilterData(2)" ng-class="{'active-btn': homeObj.jobjByFilter.list.filter.isActive == 2}"><a class="pointer">part Time</a></li>
-						<li ng-click="homeObj.getFilterData(3)" ng-class="{'active-btn': homeObj.jobjByFilter.list.filter.isActive == 3}"><a class="pointer">Both</a></li>
+						<li ng-click="homeObj.cobj.getFilterData(1)" ng-class="{'active-btn': homeObj.cobj.filter.isActive == 1}"><a class="pointer">Full Time</a></li>
+						<li ng-click="homeObj.cobj.getFilterData(2)" ng-class="{'active-btn': homeObj.cobj.filter.isActive == 2}"><a class="pointer">part Time</a></li>
+						<li ng-click="homeObj.cobj.getFilterData(3)" ng-class="{'active-btn': homeObj.cobj.filter.isActive == 3}"><a class="pointer">Both</a></li>
 					</ul>
 
-					<div class="single-post position-relative" ng-repeat="jobRow in dataFilterObject = (homeObj.jobjByFilter.data | filter: homeObj.jobObj.list.filter.filterObj) | orderBy: '-createdAt'">
+					<div class="single-post position-relative" ng-repeat="jobRow in dataFilterObject = (homeObj.jobjByFilter.data | filter: homeObj.cobj.filter.filterObj) | orderBy: '-createdAt'">
 						<div class="row">
 							<span class="job-work-timing"><span ng-if="jobRow.jobWorkType != 3">{{g.adminData.jobWorkType[jobRow.jobWorkType]}}</span>
 							<span ng-if="jobRow.jobWorkType == 3">Part Time & Full Time</span></span>
@@ -50,7 +50,7 @@
 									<h6><span class="f-w-600"><i class="fa fa-map-marker" aria-hidden="true"></i> City:</span> {{jobRow.cityName}} - ({{jobRow.jobLocation}})</h6>
 									<h6><span class="f-w-600">Required Qualification:</span> {{g.adminData.categoryObject[jobRow.qualification]}}</h6>
 
-									<button type="button" class="btn btn-primary btn-sm ic-btn" ng-click="homeObj.jobObj.preview.open(jobRow)">job Detail</button>
+									<button type="button" class="btn btn-primary btn-sm ic-btn" ng-click="homeObj.jobObj.preview.open(jobRow)">View Job Detail</button>
 									<button type="button" class="btn btn-secondary btn-sm ic-btn" ng-click="homeObj.jobObj.applyjob.openModal(jobRow)">Apply Job</button>
 								</div>
 							</div>
@@ -80,8 +80,7 @@
 	<!-- End post Area -->
 
 
-	<!-- Start callto-action Area -->
-	<div data-ng-include="'/angular/views/includes/Join-us-content.html'"></div>
+	<div data-ng-include="'/angular/views/includes/modal.html'"></div>
 
 </div>
 

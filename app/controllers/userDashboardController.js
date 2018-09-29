@@ -17,19 +17,18 @@ exports.getAllJobs = function(req, res) {
 	var jobsModel = mongoose.model('JobsBazaar');
 	var cityModel = mongoose.model('JobLocations');
 
-	var finalRes = function(result, byCity) {
+	var finalRes = function(result) {
 
-		jobsModel.countDocuments({}).exec(function(err, count) {
+		jobsModel.countDocuments({ userId: req.body.userId }).exec(function(err, count) {
 			res.json({
 				jobs: result,
-				// jobsByLocation: byCity,
 				count: count
 			});
         });
 	}
 
 
-	jobsModel.find({}).skip(req.body.skip).limit(20).exec(function(err, jobResponse) {
+	jobsModel.find({ userId: req.body.userId }).sort({ createdAt: -1 }).skip(req.body.skip).limit(20).exec(function(err, jobResponse) {
 
 		if (jobResponse && jobResponse.length) {
 			jobResponse = JSON.parse(JSON.stringify(jobResponse));
@@ -53,26 +52,8 @@ exports.getAllJobs = function(req, res) {
 						}
 					}
 				}
-
-				var byCity = [];
-				var byCity1 = [];
-				// for (var row in jobResponse) {
-				// 	if (!byCity[jobResponse[row].jobCity]) {
-				// 		byCity[jobResponse[row].jobCity] = {
-				// 			_id: jobResponse[row].cityId,
-				// 			city: jobResponse[row].cityName,
-				// 			count: 1
-				// 		};
-				// 	} else {
-				// 		byCity[jobResponse[row].jobCity].count += 1;
-				// 	}
-				// }
-
-				// for (var row in byCity) {
-				// 	byCity1.push(byCity[row]);
-				// }
 				
-				finalRes(jobResponse, byCity1);
+				finalRes(jobResponse);
 			});
 		} else{
 			finalRes(jobResponse);

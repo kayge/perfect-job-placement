@@ -2199,8 +2199,12 @@ body.mobile-nav-active #mobile-nav-toggle {
   color: #fff;
 }
 
+.section-gap-custom {
+  padding: 40px 0 !important;
+}
+
 .section-gap {
-  padding: 30px 0;
+  padding: 120px 0;
 }
 
 .section-title {
@@ -2732,7 +2736,7 @@ body.mobile-nav-active #mobile-nav-toggle {
   text-align: center;
   background-color: #49e4fa;
   color: #fff;
-  padding: 8px 15px;
+  padding: 0;
   margin-top: 60px;
   max-width: 200px;
 }

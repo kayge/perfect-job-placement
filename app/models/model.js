@@ -110,6 +110,7 @@ var JobsBazaar = new Schema({
 	facility: String,
 	jobCategory: String,
 	userId: String,
+	numbersOfCandidatesRequired: Number,
 	interviewDateFrom: Date,
 	interviewDateTo: Date,
 	requiredDoc: [],

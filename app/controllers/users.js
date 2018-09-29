@@ -85,14 +85,33 @@ exports.register = function(req, res) {
     req.body.email = req.body.email.toLowerCase();
     req.body.createdAt = new Date().getTime();
 
-    var user = new ourClients(req.body);
 
-    user.save(function(err, userResponse) {
-        if (err) {
-            res.json({status: false});
-            return;    
-        }
-        res.json({status: true});
+    ourClients.find({
+        email: req.body.email
+    }).limit(1).exec(function(err, response) {
+
+        if (response.length) {
+            res.json({
+                status: true,
+                userExist: true
+            });
+            return;
+        } 
+
+
+        var user = new ourClients(req.body);
+        user.save(function(err, userResponse) {
+            
+            if (err) {
+                res.json({status: false});
+                return;    
+            }
+
+            res.json({
+                status: true,
+                userExist: false
+            });
+        });
     });
 }
 
