@@ -2560,6 +2560,7 @@ body.mobile-nav-active #mobile-nav-toggle {
   margin-top: 15px;
   margin-bottom: 0;
   color: #222;
+  font-weight: 500;
 }
 
 .single-fcat:hover {

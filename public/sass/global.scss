@@ -122,7 +122,22 @@
 	}
 }
 
+button {
+	border: 0 !important;
+	border-radius: 0 !important;
+}
+
 .modal {
+
+	.modal-content {
+		border: 0;
+	    border-radius: 0;
+	    box-shadow: 0px 0px 10px 0px #131313;
+	}
+
+	input {
+		border-radius: 0;
+	}
 
 	label {
 		font-weight: 500;
