@@ -6,7 +6,7 @@
         <li class="nav-item text-nowrap" ng-if="g.loggedUser._id">
             <button type="button" class="btn btn-primary btn-sm header-logged-user"><i class="fa fa-address-book-o" aria-hidden="true"></i> {{g.loggedUser.firstName}} {{g.loggedUser.lastName}}</button>
             <button type="button" class="btn btn-primary btn-sm header-logged-user">
-                <a href="/users/signout">
+                <a href="/users/signout" class="text-danger">
                     Sign Out
                 </a>
             </button>

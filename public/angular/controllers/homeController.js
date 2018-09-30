@@ -237,6 +237,9 @@ appModule.controller('HomeController', ['$scope', '$http', '$location', '$uibMod
             $scope.homeObj.jobObj.applyjob.model = {};
             $scope.homeObj.jobObj.applyjob.isSubmited = false;
             $scope.homeObj.jobObj.applyjob.isReqSent = false;
+            $scope.homeObj.jobObj.applyjob.confirmUnique.isSubmited = false;
+            $scope.homeObj.jobObj.applyjob.confirmUnique.isReqSent = false;
+
             $('#apply-for-job').modal('hide');
             $('#confirm-contact').modal('hide');
         }

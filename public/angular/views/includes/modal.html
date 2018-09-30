@@ -244,8 +244,8 @@
 			<div class="modal-body">
 				<div class="row">
 					<div class="col-md-12">
-						<label>Phone (Mobile)</label>
-						<input type="number" class="form-control" name="phone" ng-model="homeObj.jobObj.applyjob.model.mobile">
+						<label>Contact Number</label>
+						<input type="number" class="form-control" name="phone" ng-model="homeObj.jobObj.applyjob.model.mobile" ng-required="true" ng-class="{ 'text-error': homeObj.jobObj.applyjob.confirmUnique.isSubmited && confirmMobileForm.phone.$error.required }">
 					</div>
 				</div>
 			</div>
@@ -261,7 +261,7 @@
 
 <div class="modal fade" id="comming-soon" tabindex="-1" role="dialog" aria-hidden="true">
 	<div class="modal-dialog" role="document">
-		<div class="modal-content" ng-form="confirmMobileForm">
+		<div class="modal-content">
 			<div class="modal-header">
 				<h3 class="modal-title">Sorry</h3>
 				<button type="button" class="close" aria-label="Close" data-dismiss="modal">
