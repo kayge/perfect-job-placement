@@ -23,14 +23,14 @@ var path = require('path'),
 
 var app = module.exports = express();
 
-mongoose.connect('mongodb://heroku_xxgmmxtk:fh9nvalplv0u5h8r7821vcdnmq@ds225902.mlab.com:25902/heroku_xxgmmxtk', function(err) {
-	if (err) {
-		console.log('Could not connect to MongoDB!');
-	}
-});
+// mongoose.connect('mongodb://heroku_xxgmmxtk:fh9nvalplv0u5h8r7821vcdnmq@ds225902.mlab.com:25902/heroku_xxgmmxtk', function(err) {
+// 	if (err) {
+// 		console.log('Could not connect to MongoDB!');
+// 	}
+// });
 
 // connect mongDB
-// mongoose.connect('mongodb://localhost/perfect-job-placement');
+mongoose.connect('mongodb://localhost/perfect-job-placement');
 
 
 // ExpressJS Configuration

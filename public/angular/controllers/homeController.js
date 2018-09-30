@@ -8,9 +8,6 @@ appModule.controller('HomeController', ['$scope', '$http', '$location', '$uibMod
         $scope.homeObj = {};
     	$scope.homeObj.cobj = {};
 
-        //
-        $rootScope.g.adminData = globalObj;
-
 
 
 
@@ -19,6 +16,11 @@ appModule.controller('HomeController', ['$scope', '$http', '$location', '$uibMod
 
         $scope.homeObj.cobj.commingSoon = function() {
             $('#comming-soon').modal('show');
+        }
+
+
+        $scope.homeObj.cobj.gotoLocation = function(key, id) {
+            $location.path(key+id);
         }
 
         

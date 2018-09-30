@@ -4,7 +4,6 @@ appModule.controller('CommonController', ['$scope', '$http', '$location', '$uibM
     function($scope, $http, $location, $uibModal, $stateParams, $rootScope, $timeout, $state, icdb, alertService) {
 
         $scope.comnObj = {};
-        $rootScope.g.adminData = globalObj;
 
 
 

@@ -135,7 +135,8 @@
 					</div>
 				</div>
 			</div>
-			<div class="row">
+
+			<div class="row display-not-in-mobile">
 				<div class="col-lg-2 col-md-4 col-sm-6">
 					<div class="single-fcat">
 						<a href="#!/category/1/1">
@@ -183,6 +184,20 @@
 						</a>
 						<p>Others</p>
 					</div>
+				</div>
+			</div>
+			
+			<div class="row display-in-mobile">
+				<div class="col-md-12">
+					<select class="form-control" ng-change="homeObj.cobj.gotoLocation('category/1/', homeObj.selectedJocategory)" ng-model="homeObj.selectedJocategory">
+						<option value="">- Select Job By Categories -</option>
+						<option value="1">Industrial</option>
+						<option value="2">Computer</option>
+						<option value="3">Account</option>
+						<option value="4">Sales & Marcketing</option>
+						<option value="5">Back Office</option>
+						<option value="6">Others</option>
+					</select>
 				</div>
 			</div>
 		</div>
@@ -256,7 +271,17 @@
 				<div class="col-lg-4 sidebar">
 					<div class="single-slidebar">
 						<h4>Jobs by Location</h4>
-						<ul class="cat-list">
+						
+						<div class="row display-in-mobile">
+							<div class="col-md-12">
+								<select class="form-control" ng-change="homeObj.cobj.gotoLocation('category/2/', homeObj.selectedJobLocation)" ng-model="homeObj.selectedJobLocation">
+									<option value="">- Select Job Location -</option>
+									<option value="{{row._id}}" ng-repeat="row in homeObj.jobObj.jobsByLocation">{{row.city}} <span class="text-orange">{{row.count}}</span></option>
+								</select>
+							</div>
+						</div>
+
+						<ul class="cat-list display-not-in-mobile">
 							<li class="pointer" ng-repeat="row in homeObj.jobObj.jobsByLocation">
 								<a class="justify-content-between d-flex" href="#!/category/2/{{row._id}}">
 									<p>{{row.city}}</p>

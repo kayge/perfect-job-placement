@@ -56,12 +56,8 @@ appModule.run(function($rootScope, $timeout, $location) {
 
     $rootScope.g = {};
     $rootScope.g.adminData = {};
+    $rootScope.g.adminData = globalObj;
 
-    $rootScope.g.isSiteAdmin = false;
-
-    if (location.href.indexOf('#!/site-admin') != -1) {
-        $rootScope.g.isSiteAdmin = true;
-    }
 
     $rootScope.$on( "$stateChangeSuccess", function(event, next, current) {
         $("html, body").animate({ scrollTop: 0 }, "slow");

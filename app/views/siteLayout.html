@@ -105,27 +105,27 @@
                     </div>
                     <nav id="nav-menu-container">
                         <ul class="nav-menu">
-                            <li ng-class="{'active': g.getActiveClass('/home')}">
+                            <li id="close-sidebar-on-click" ng-class="{'active': g.getActiveClass('/home')}">
                                 <a href="#!/home">
                                     Home
                                 </a>
                             </li>
-                            <li ng-class="{'active': g.getActiveClass('/aboutus')}">
+                            <li id="close-sidebar-on-click" ng-class="{'active': g.getActiveClass('/aboutus')}">
                                 <a href="#!/aboutus">
                                     About Us
                                 </a>
                             </li>
-                            <li ng-class="{'active': g.getActiveClass('/contact')}">
+                            <li id="close-sidebar-on-click" ng-class="{'active': g.getActiveClass('/contact')}">
                                 <a href="#!/contact">
                                     Contact
                                 </a>
                             </li>
-                            <li ng-class="{'active': g.getActiveClass('/blogs')}">
+                            <li id="close-sidebar-on-click" ng-class="{'active': g.getActiveClass('/blogs')}">
                                 <a href="#!/blogs">
                                     Blog
                                 </a>
                             </li>
-                            <li ng-class="{'active': g.getActiveClass('/user-dashboard')}" ng-if="g.loggedUser._id">
+                            <li id="close-sidebar-on-click" ng-class="{'active': g.getActiveClass('/user-dashboard')}" ng-if="g.loggedUser._id">
                                 <a href="#!/user-dashboard">
                                     Dashboard
                                 </a>
@@ -140,7 +140,7 @@
                                     Job Post
                                 </a>
                             </li>
-                            <li ng-class="{'active': g.getActiveClass('')}" ng-if="g.loggedUser._id">
+                            <li id="close-sidebar-on-click" ng-class="{'active': g.getActiveClass('')}" ng-if="g.loggedUser._id">
                                 <a class="ticker-btn pointer" href="/users/signout">
                                     Logout
                                 </a>
@@ -150,6 +150,18 @@
                 </div>
             </div>
         </header>
+
+        <script type="text/javascript">
+            if ($(window).width() < 768) {
+                if ($('#nav-menu-container').length) {
+                    $(document).on('click', '#close-sidebar-on-click', function(e) {
+                        $('body').toggleClass('mobile-nav-active');
+                        $('#mobile-nav-toggle i').toggleClass('lnr-cross lnr-menu');
+                        $('#mobile-body-overly').toggle();
+                    });
+                }
+            }
+        </script>
 
         <section class="body-main-cn">
             <div ui-view="">

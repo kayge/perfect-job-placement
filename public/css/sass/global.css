@@ -178,3 +178,24 @@ input[type=number]::-webkit-outer-spin-button {
 /* Handle on hover */
 ::-webkit-scrollbar-thumb:hover {
   background: #555; }
+
+.display-in-mobile {
+  display: none; }
+
+@media (max-width: 767px) {
+  h1 {
+    font-size: 20px !important; }
+  .display-in-mobile {
+    display: block; }
+  .display-not-in-mobile {
+    display: none; }
+  .popular-post-area {
+    padding-top: 50px; }
+  .section-gap {
+    padding: 40px 0; }
+  .about-content {
+    padding: 50px 0px; }
+  .body-main-cn {
+    margin-top: 79px; }
+  #header {
+    background: rgba(0, 0, 0, 0.8) !important; } }
