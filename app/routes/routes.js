@@ -11,6 +11,7 @@ var ctrl = {
     siteMgmt: require('../controllers/siteMgmt'),
     users: require('../controllers/users'),
     adminUsers: require('../controllers/adminUsers'),
+    manageAdminCtrl: require('../controllers/adminMgmtController'),
     suerDashboard: require('../controllers/userDashboardController')
 };
 
@@ -47,6 +48,10 @@ router.get('/users/signout', ctrl.users.signout);
 router.post('/api/admin-user/register', ctrl.adminUsers.register);
 router.post('/api/admin-user/login', ctrl.adminUsers.login);
 router.get('/api/admin/get/dashboard-counts', ctrl.adminUsers.getDbCount);
+
+//
+router.post('/api/admin/get-data/with-condition', ctrl.manageAdminCtrl.getDataWithCondition);
+
 
 
 

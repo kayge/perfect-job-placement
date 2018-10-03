@@ -10,18 +10,54 @@ appModule.controller('JobMgmtController', ['$scope', '$http', '$location', '$uib
 		$scope.jobMgmtObj.list = {};
 		$scope.jobMgmtObj.list.loading = false;
 		$scope.jobMgmtObj.list.data = [];
+		$scope.jobMgmtObj.list.count = 0;
 
 		$scope.jobMgmtObj.list.init = function() {
 			$scope.jobMgmtObj.list.loading = true;
 
-			icdb.getCondition('JobsBazaar', {
-				status: { $ne: 3 }
-			}, function(response) {
-				$scope.jobMgmtObj.list.data = response;
+			$http.post('api/admin/get-data/with-condition', {
+				model: 'JobsBazaar',
+				skip: $scope.jobMgmtObj.list.data.length,
+				condition: {},
+			}).success(function(response) {
+				
+				if (response.data && response.data.length) {
+					for (var row in response.data) {
+						$scope.jobMgmtObj.list.data.push(response.data[row]);
+					}
+
+					$scope.jobMgmtObj.list.count = response.count;
+				}
 
 				$timeout(function() {
-					$scope.jobMgmtObj.list.loading = false;
-				}, 10);
+	        		$scope.jobMgmtObj.list.loading = false;
+	        	}, 10);
+	        });
+		}
+
+
+		$scope.jobMgmtObj.list.isLoadMore = false;
+
+		$scope.jobMgmtObj.list.loadMore = function() {
+			$scope.jobMgmtObj.list.isLoadMore = true;
+
+			$http.post('api/admin/get-data/with-condition', {
+				model: 'JobsBazaar',
+				skip: $scope.jobMgmtObj.list.data.length,
+				condition: {},
+			}).success(function(response) {
+				
+				if (response.data && response.data.length) {
+					for (var row in response.data) {
+						$scope.jobMgmtObj.list.data.push(response.data[row]);
+					}
+
+					$scope.jobMgmtObj.list.count = response.count;
+				}
+
+				$timeout(function() {
+	        		$scope.jobMgmtObj.list.isLoadMore = false;
+	        	}, 10);
 	        });
 		}
 
@@ -86,6 +122,26 @@ appModule.controller('JobMgmtController', ['$scope', '$http', '$location', '$uib
 					if ($scope.jobMgmtObj.list.data[i]._id == row._id) {
 						$scope.jobMgmtObj.list.data.splice(i, 1);
 					}
+				}
+			});
+
+			$scope.jobMgmtObj.list.count = $scope.jobMgmtObj.list.count - 1;
+		}
+
+
+		// -------------- Delete Job -------------------
+		$scope.jobMgmtObj.clone = {};
+		$scope.jobMgmtObj.clone.create = function(cloneData) {
+			
+			var postData = angular.copy(cloneData);
+			delete postData._id;
+
+			icdb.insert('JobsBazaar', postData, function(response) {
+				if (response.status) {
+					$scope.jobMgmtObj.list.data.push(response.result);
+					console.log($scope.jobMgmtObj.list.data);
+					$scope.jobMgmtObj.list.count = $scope.jobMgmtObj.list.count + 1;
+					alertService.flash('success', 'Job has been clone successfully.');
 				}
 			});
 		}

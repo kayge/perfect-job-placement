@@ -21,10 +21,17 @@
 			            <select class="form-control" ng-model="jobMgmtObj.list.filter">
 			            	<option value="2">Active</option>
 			            	<option value="1">Deactive</option>
-			            	<!-- <option>Closed</option> -->
 			            </select>
 			        </li>
 			    </ul>
+
+			    <ul class="nav nav-pills mb-15" ng-if="!jobMgmtObj.list.loading">
+					<li class="nav-item">
+					    <h5>
+					    	Data Available: <span class="text-info">{{jobMgmtObj.list.count}} / {{jobMgmtObj.list.data.length}}</span>
+					    </h5>
+					</li>
+				</ul>
 
 				<table class="table table-bordered table-striped mb-0" ng-if="jobMgmtObj.list.data.length && !jobMgmtObj.list.loading">
 				    <thead>
@@ -36,7 +43,7 @@
 				        </tr>
 				    </thead>
 				    <tbody>
-				        <tr ng-repeat="jobRow in jobMgmtObjFilter = (jobMgmtObj.list.data | orderBy: '-createdAt' | filter: { jobTitle: jobMgmtObj.list.searchjob, status: jobMgmtObj.list.filter })">
+				        <tr ng-repeat="jobRow in jobMgmtObjFilter = (jobMgmtObj.list.data | filter: { jobTitle: jobMgmtObj.list.searchjob, status: jobMgmtObj.list.filter })">
 				            <td>{{jobRow.jobTitle}}</td>
 				            <td>
 								<select class="form-control" ng-model="jobRow.status" ng-change="jobMgmtObj.edit.activeJob(jobRow)">
@@ -49,9 +56,12 @@
 				            	<span>Created At: {{jobRow.createdAt | date}}</span>
 				            </td>
 				            <td>
-				                <div><i ng-click="jobMgmtObj.edit.openModal(jobRow)" class="fa fa-pencil-square-o pointer ml-10" aria-hidden="true"></i>
-				                <i ng-click="jobMgmtObj.delete.openModal(jobRow, false)" ng-if="jobRow.isDelete" class="fa fa-trash-o pointer ml-10 text-danger" aria-hidden="true"></i>
-				                <i ng-click="jobMgmtObj.delete.openModal(jobRow, true)" ng-if="!jobRow.isDelete" class="fa fa-trash-o pointer ml-10" aria-hidden="true"></i>
+				                <div>
+				                	<i ng-click="jobMgmtObj.edit.openModal(jobRow)" class="fa fa-pencil-square-o pointer ml-10" aria-hidden="true"></i>
+				                	<i ng-click="jobMgmtObj.delete.openModal(jobRow, false)" ng-if="jobRow.isDelete" class="fa fa-trash-o pointer ml-10 text-danger" aria-hidden="true"></i>
+				                	<i ng-click="jobMgmtObj.delete.openModal(jobRow, true)" ng-if="!jobRow.isDelete" class="fa fa-trash-o pointer ml-10" aria-hidden="true"></i>
+				                	<i class="fa fa-clone pointer ml-10" aria-hidden="true" ng-click="jobMgmtObj.clone.create(jobRow)"></i>
+				                </div>
 				            </td>
 				        </tr>
 				        <tr ng-if="!jobMgmtObjFilter.length">
@@ -63,6 +73,15 @@
 				        </tr>
 				    </tbody>
 				</table>
+
+				<div class="row">
+					<div class="col-md-12" ng-if="!jobMgmtObj.list.isLoadMore && jobMgmtObj.list.count > jobMgmtObj.list.data">
+						<button class="btn-primary btn-sm float-right" ng-if="jobMgmtObj.list.count > jobMgmtObj.list.data" ng-click="jobMgmtObj.list.loadMore()">Load More</button>
+					</div>
+					<div class="col-md-12" ng-if="jobMgmtObj.list.isLoadMore && jobMgmtObj.list.count > jobMgmtObj.list.data">
+						<button class="btn-primary btn-sm float-right">Loading ...</button>
+					</div>
+				</div>
 
 				<div ng-if="!jobMgmtObj.list.data.length && !jobMgmtObj.list.loading" class="no-data-cn text-center">
 					<h4>No data</h4>

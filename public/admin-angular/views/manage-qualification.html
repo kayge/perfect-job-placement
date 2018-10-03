@@ -23,8 +23,15 @@
 					    <button type="button" class="btn btn-primary" ng-disabled="!qlObj.add.model.name" ng-click="qlObj.add.submit()">Save</button>
 					</li>
 				</ul>
+				<ul class="nav nav-pills mb-15" ng-if="!qlObj.list.loading">
+					<li class="nav-item">
+					    <h5>
+					    	Data Available: <span class="text-info">{{qlObj.list.count}} / {{qlObj.list.data.length}}</span>
+					    </h5>
+					</li>
+				</ul>
 
-				<table class="table table-bordered table-striped mb-0" ng-if="qlObj.list.data.length && !qlObj.list.loading">
+				<table class="table table-bordered table-striped" ng-if="qlObj.list.data.length && !qlObj.list.loading">
 				    <thead>
 				        <tr>
 				            <th>key</th>
@@ -61,6 +68,15 @@
 				        </tr>
 				    </tbody>
 				</table>
+
+				<div class="row">
+					<div class="col-md-12" ng-if="!qlObj.list.isLoadMore && qlObj.list.count > qlObj.list.data.length">
+						<button class="btn-primary btn-sm float-right" ng-if="qlObj.list.count > qlObj.list.data.length" ng-click="qlObj.list.loadMore()">Load More</button>
+					</div>
+					<div class="col-md-12" ng-if="qlObj.list.isLoadMore && qlObj.list.count > qlObj.list.data.length">
+						<button class="btn-primary btn-sm float-right">Loading ...</button>
+					</div>
+				</div>
 
 				<div ng-if="!qlObj.list.data.length && !qlObj.list.loading" class="no-data-cn text-center">
 					<h4>No data</h4>

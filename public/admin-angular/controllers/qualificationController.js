@@ -11,17 +11,52 @@ appModule.controller('QualificationController', ['$scope', '$http', '$location',
 		$scope.qlObj.list = {};
 		$scope.qlObj.list.loading = false;
 		$scope.qlObj.list.data = [];
+		$scope.qlObj.list.count = 0;
 
 		$scope.qlObj.list.init = function() {
 			$scope.qlObj.list.loading = true;
 
-			icdb.get('Qualifications', function(result) {
-				$scope.qlObj.list.data = result;
+			$http.post('api/admin/get-data/with-condition', {
+				model: 'Qualifications',
+				skip: $scope.qlObj.list.data.length,
+				condition: {},
+			}).success(function(response) {
+				
+				if (response.data && response.data.length) {
+					for (var row in response.data) {
+						$scope.qlObj.list.data.push(response.data[row]);
+					}
+					$scope.qlObj.list.count = response.count;
+				}
 
 				$timeout(function() {
 	        		$scope.qlObj.list.loading = false;
 	        	}, 10);
-	        });
+			});
+		}
+
+
+		$scope.qlObj.list.isLoadMore = false;
+		$scope.qlObj.list.loadMore = function() {
+			$scope.qlObj.list.isLoadMore = true;
+
+			$http.post('api/admin/get-data/with-condition', {
+				model: 'Qualifications',
+				skip: $scope.qlObj.list.data.length,
+				condition: {},
+			}).success(function(response) {
+				
+				if (response.data && response.data.length) {
+					for (var row in response.data) {
+						$scope.qlObj.list.data.push(response.data[row]);
+					}
+					$scope.qlObj.list.count = response.count;
+				}
+
+				$timeout(function() {
+	        		$scope.qlObj.list.isLoadMore = false;
+	        	}, 10);
+			});
 		}
 
 
