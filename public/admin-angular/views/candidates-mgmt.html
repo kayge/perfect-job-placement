@@ -10,35 +10,120 @@
 					<h3 class="h3">Candidate Management</h3>
 				</div>
 
-				<table class="table table-bordered table-striped mb-0" ng-if="candObj.list.data.length && !candObj.list.loading">
-				    <thead>
-				        <tr>
-				            <th>Name</th>
-				            <th>Contact</th>
-				            <th>Job Id</th>
-				            <th>Register Date</th>
-				            <th>Action</th>
-				        </tr>
-				    </thead>
-				    <tbody>
-				        <tr ng-repeat="cRow in candObj.list.data | orderBy: '-createdAt'">
-				            <td>{{cRow.name}}</td>
-				            <td>
-								{{cRow.mobile}}
-				            </td>
-				            <td>
-								{{cRow.jobId}}
-				            </td>
-				            <td>
-				            	{{cRow.createdAt | date}}</span>
-				            </td>
-				            <td>
-				                <i ng-click="candObj.delete.openModal(cRow, false)" ng-if="cRow.confirm" class="fa fa-trash-o pointer ml-10 text-danger" aria-hidden="true"></i>
-				                <i ng-click="candObj.delete.openModal(cRow, true)" ng-if="!cRow.confirm" class="fa fa-trash-o pointer ml-10" aria-hidden="true"></i>
-				            </td>
-				        </tr>
-				    </tbody>
-				</table>
+				<div class="row">
+					<div class="col-lg-12">
+						<div class="form-group">
+							<input type="text" name="searchData" class="form-control" ng-model="candObj.list.searchname" placeholder="Search candidates by name">
+						</div>
+					</div>
+					<div class="col-lg-12 mb-1">
+						<h6>Filter By</h6>
+					</div>
+					
+					<div class="col-lg-12">
+						<div class="row">
+							<div class="col-lg-3">
+								<div class="form-group">
+									<select class="form-control" ng-model="candObj.fltObj.model.category">
+										<option value="">--- Select Category ---</option>
+										<option value="1"> Industrial</option>
+									    <option value="2"> Computer</option>
+									    <option value="3"> Account</option>
+									    <option value="4"> Sales & Marcketing</option>
+									    <option value="5"> Back Office</option>
+									    <option value="6"> Others</option>
+									</select>	
+								</div>
+							</div>
+
+							<div class="col-lg-3">
+								<div class="form-group">
+									<select class="form-control" ng-model="candObj.fltObj.model.experience">
+										<option value="">--- Select Experience ---</option>
+										<option value="1">Fresher</option>
+										<option value="2">6 Month To 1 Year</option>
+										<option value="3">1 To 2 Year</option>
+										<option value="4">3 To 5 Year</option>
+										<option value="5">5 To 10 Year</option>
+										<option value="6">10 Year+</option>
+									</select>	
+								</div>
+							</div>
+
+							<div class="col-lg-3">
+								<div class="form-group">
+									<select class="form-control" ng-model="candObj.fltObj.model.gender">
+										<option value="">--- Select Gender Type ---</option>
+										<option value="male">Male</option>
+										<option value="female">Female</option>
+									</select>
+								</div>	
+							</div>
+
+							<div class="col-lg-3">
+								<div class="form-group">
+									<select class="form-control" ng-model="candObj.fltObj.model.qualification">
+										<option value="">--- Select Qualification ---</option>
+										<option value="1">Post Graduation</option>
+										<option value="2">Under Graduates</option>
+										<option value="3">BE / ME</option>
+										<option value="4">DIPLOMA</option>
+										<option value="5">ITI</option>
+										<option value="6">Other</option>
+									</select>
+								</div>
+							</div>
+
+							<div class="col-lg-3">
+								<div class="form-group">
+									<select class="form-control" ng-model="candObj.fltObj.model.areaOfInterest">
+										<option value="">--- Select Area Of Interest ---</option>
+										<option value="{{arRow.title}}" ng-repeat="arRow in globalvarObj.areaOfInterest">{{arRow.title}}</option>
+									</select>
+								</div>
+							</div>
+
+							<div class="col-lg-3">
+								<div class="form-group">
+									<button class="btn btn-primary btn-block" ng-click="candObj.fltObj.submit()">Load</button>
+								</div>
+							</div>
+						</div>
+					</div>
+
+					<hr>
+				</div>
+
+				<div class="table-responsive mt-3" ng-if="candObj.list.data.length && !candObj.list.loading">
+					<table class="table table-bordered table-striped mb-0">
+					    <thead>
+					        <tr>
+					            <th>#</th>
+					            <th>Name</th>
+					            <th>Contact</th>
+					            <th>Register Date</th>
+					            <th>Action</th>
+					        </tr>
+					    </thead>
+					    <tbody>
+					        <tr ng-repeat="cRow in candObj.list.data | filter: { name: candObj.list.searchname } | orderBy: '-createdAt'">
+					            <td>{{$index}}</td>
+					            <td>{{cRow.name}}</td>
+					            <td>
+									{{cRow.mobile}}
+					            </td>
+					            <td>
+					            	{{cRow.createdAt | date}}</span>
+					            </td>
+					            <td>
+					                <i ng-click="candObj.delete.openModal(cRow, false)" ng-if="cRow.confirm" class="fa fa-trash-o pointer ml-10 text-danger" aria-hidden="true"></i>
+					                <i ng-click="candObj.delete.openModal(cRow, true)" ng-if="!cRow.confirm" class="fa fa-trash-o pointer ml-10" aria-hidden="true"></i>
+					            	<i ng-click="cdUser.create.openModal(cRow)" class="fa fa-pencil-square-o pointer ml-10" aria-hidden="true"></i>
+					            </td>
+					        </tr>
+					    </tbody>
+					</table>
+				</div>
 
 				<div ng-if="!candObj.list.data.length && !candObj.list.loading" class="no-data-cn text-center">
 					<h4>No data</h4>

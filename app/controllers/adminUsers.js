@@ -71,7 +71,7 @@ exports.login = function(req, res) {
     userModel.findOne({
         email: req.body.email.toLowerCase(),
         password: req.body.password,
-    }).exec(function(err, result) {
+    }).exec(function(err, response) {
 
         if (err) {
             res.json({
@@ -80,11 +80,16 @@ exports.login = function(req, res) {
             return;
         }
 
-        if (result && result._id) {
-            req.session.user = result;
+        if (response && response._id) {
+
+            response = JSON.parse(JSON.stringify(response));
+
+            response.isAdmin = true;
+            req.session.user = response;
+
             res.json({
                 status: true,
-                result: result
+                response: response
             });
             return;
         }
@@ -205,7 +210,6 @@ exports.changePassword = function(req, res) {
  */
 exports.getDbCount = function(req, res) {
     var siteVisitor = mongoose.model('SiteVisitor');
-    var dubscribedUser = mongoose.model('SubscribedUser');
     var ourClients = mongoose.model('OurClients');
     var candidateRegister = mongoose.model('CandidateRegister');
     var jobsBazaar = mongoose.model('JobsBazaar');
@@ -214,11 +218,6 @@ exports.getDbCount = function(req, res) {
     async.parallel({
         getSiteVisitor: function(callback) {
             siteVisitor.find({}).count(function(err, count) {
-                callback(null, count)
-            });
-        },
-        getSubscribedUser: function(callback) {
-            dubscribedUser.find({}).count(function(err, count) {
                 callback(null, count)
             });
         },

@@ -120,51 +120,31 @@ appModule.controller('HomeController', ['$scope', '$http', '$location', '$uibMod
         $scope.homeObj.jobObj.list = {};
         
         $scope.homeObj.jobObj.list.isLoading = false;
+        $scope.homeObj.jobObj.list.isLoadMore = false;
         $scope.homeObj.jobObj.list.data = [];
-        var skip = 0;
+        $scope.homeObj.jobObj.list.totalJobs = 0;
+        $scope.homeObj.jobObj.list.jobsByLocation = [];
 
-        $scope.homeObj.jobObj.init = function() {
-            $scope.homeObj.jobObj.list.isLoading = true;
+        $scope.homeObj.jobObj.init = function(status) {
+            if (status) {
+                $scope.homeObj.jobObj.list.isLoadMore = true;
+            } else{
+                $scope.homeObj.jobObj.list.isLoading = true;
+            }
+
 
             $http.post('/api/site/get-jobs', {
-                skip: skip
+                skip: $scope.homeObj.jobObj.list.data.length
             }).success(function(response) {
-                skip = skip + 20;
+
+                console.log(response);
                 
                 $scope.homeObj.jobObj.list.data = response.result;
-                $scope.homeObj.jobObj.totalJobs = response.count;
-                $scope.homeObj.jobObj.jobsByLocation = response.jobsByLocation;
+                $scope.homeObj.jobObj.list.totalJobs = response.count;
+                $scope.homeObj.jobObj.list.jobsByLocation = response.jobsByLocation;
                 
                 $timeout(function() {
                     $scope.homeObj.jobObj.list.isLoading = false;
-                }, 200);
-            });
-        }
-
-
-        $scope.homeObj.jobObj.loadMore = function() {
-            $scope.homeObj.jobObj.list.isLoadMore = true;
-
-            $http.post('/api/site/get-jobs', {
-                skip: skip
-            }).success(function(response) {
-                skip = skip + 20;
-
-                if (response.result && response.result.length) {
-                    for (var r in response.result) {
-                        $scope.homeObj.jobObj.list.data.push(response.result[r]);
-                    }
-                }
-
-                $scope.homeObj.jobObj.totalJobs = response.count;
-
-                if (response.jobsByLocation && response.jobsByLocation.length) {
-                    for (var r in response.jobsByLocation) {
-                        $scope.homeObj.jobObj.jobsByLocation.push(response.jobsByLocation[r]);
-                    }
-                }
-                
-                $timeout(function() {
                     $scope.homeObj.jobObj.list.isLoadMore = false;
                 }, 200);
             });
@@ -261,7 +241,7 @@ appModule.controller('HomeController', ['$scope', '$http', '$location', '$uibMod
 
 
             icdb.getCondition('TrackUniqueContact', {
-                jobId: $scope.homeObj.jobObj.applyjob.model.jobId,
+                // jobId: $scope.homeObj.jobObj.applyjob.model.jobId,
                 contact: $scope.homeObj.jobObj.applyjob.model.mobile
             }, function(response) {
                 if (response.length) {
@@ -295,19 +275,18 @@ appModule.controller('HomeController', ['$scope', '$http', '$location', '$uibMod
             }
 
             $scope.homeObj.jobObj.applyjob.isReqSent = true;
-
-            icdb.insert('CandidateRegister', $scope.homeObj.jobObj.applyjob.model, function(response) {
-                icdb.insert('TrackUniqueContact', {
-                    jobId: $scope.homeObj.jobObj.applyjob.model.jobId,
-                    contact: $scope.homeObj.jobObj.applyjob.model.mobile
-                }, function(response1) {
-                    $scope.homeObj.jobObj.applyjob.closeModal();
-                    alertService.flash('success', 'Congratulations, You are successfully apply for job.');
-                });
+            
+            icdb.insert('TrackUniqueContact', {
+                jobId: $scope.homeObj.jobObj.applyjob.model.jobId,
+                contact: $scope.homeObj.jobObj.applyjob.model.mobile
+            }, function(response1) {
+                $scope.homeObj.jobObj.applyjob.closeModal();
+                alertService.flash('success', 'Congratulations, You are successfully apply for job.');
             });
+
+            // icdb.insert('CandidateRegister', $scope.homeObj.jobObj.applyjob.model, function(response) {
+            // });
         }
-
-
 
 
 

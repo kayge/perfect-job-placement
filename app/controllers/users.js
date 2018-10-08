@@ -28,43 +28,6 @@ exports.signout = function(req, res) {
 
 
 
-/**
- * Subscribed
- */
-exports.subscribed = function(req, res) {
-
-    var subscribedUser = mongoose.model('SubscribedUser');
-
-    subscribedUser.findOne({
-        email: req.body.email.toLowerCase()
-    }).exec(function(err, result) {
-
-        if (err) {
-            res.json({
-                status: 1
-            });
-            return;
-        }
-
-        if (result && result._id) {
-            res.json({
-                status: 2
-            });
-            return;
-        }
-
-        req.body.createdAt = new Date().getTime();
-        var saveData = new subscribedUser(req.body);
-        saveData.save(function(err, result) {});
-
-        res.json({
-            status: 3,
-        });
-        return;
-    });
-};
-
-
 
 /**
  * Send User

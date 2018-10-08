@@ -47,3 +47,107 @@ exports.getDataWithCondition = function(req, res) {
 		});
 	});
 };
+
+
+
+
+/**
+ * Get job list with user data
+ */
+exports.getJobList = function(req, res) {
+
+
+	//
+	var JobsBazaarModel = mongoose.model('JobsBazaar');
+	var TrackUniqueContactModel = mongoose.model('TrackUniqueContact');
+	var CandidateRegister = mongoose.model('CandidateRegister');
+	var jobIds = [];
+
+
+	//
+	JobsBazaarModel.find({ status: { $ne: 3 }}).exec(function(err, responseData) {
+
+
+		//
+		if(err) {
+			res.json({
+				status: false,
+				data: []
+			});
+			return;
+		}
+
+		res.json({
+			status: true,
+			data: responseData
+		});
+
+		return;
+
+
+		//
+		var getUserDatail = function(contactNumber, callback) {
+			CandidateRegister.find({ mobile: { $in: contactNumber }}, {
+				name: true,
+				mobile: true,
+				qualifiction: true,
+				city: true,
+				gender: true,
+				experience: true,
+			}).exec(function(err, caRes) {
+				callback(caRes);
+			});
+		}
+
+
+		//
+		if (responseData.length) {
+
+			responseData = JSON.parse(JSON.stringify(responseData));
+			var dCount = 0;
+			
+			//
+			var loopFunction = function() {
+
+				if (responseData.length > dCount) {
+
+					TrackUniqueContactModel.find({ jobId:  responseData[dCount]._id }).exec(function(err, trackData) {
+
+						var contacts = [];
+
+						for (var td in trackData) {
+							contacts.push(trackData[td].contact);
+						}
+
+						if (contacts.length) {
+							getUserDatail(contacts, function(cbres1) {
+								responseData[dCount].jobPoster = cbres1;
+								dCount = dCount + 1;
+								loopFunction();
+							});
+						} else {
+							dCount = dCount + 1;
+							loopFunction();
+						}
+					});
+				} else {
+					res.json({ 
+						status: true,
+						data: responseData,
+					});
+				}
+			}
+
+			loopFunction();
+
+			return;
+		}
+
+
+		//
+		res.json({
+			status: false,
+			data: []
+		});
+	});
+};

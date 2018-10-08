@@ -38,7 +38,6 @@ router.post('/api/site/user-visitor', ctrl.common.siteVisitor);
 // Auth routes
 router.post('/api/user/register', ctrl.users.register);
 router.post('/api/user/login', ctrl.users.login);
-router.post('/api/user/subscribed', ctrl.users.subscribed);
 router.post('/api/user/forgot-pass', ctrl.users.forgotPassword);
 router.post('/api/user/change-pass', ctrl.users.changePassword);
 router.get('/users/me', ctrl.users.me);
@@ -51,6 +50,7 @@ router.get('/api/admin/get/dashboard-counts', ctrl.adminUsers.getDbCount);
 
 //
 router.post('/api/admin/get-data/with-condition', ctrl.manageAdminCtrl.getDataWithCondition);
+router.post('/api/admin/get-job/all', ctrl.manageAdminCtrl.getJobList);
 
 
 

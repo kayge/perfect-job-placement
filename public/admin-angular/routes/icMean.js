@@ -135,14 +135,6 @@ appModule.config(['$stateProvider', '$urlRouterProvider', '$locationProvider',
             }
         });
 
-        $stateProvider.state('subscriber-mgmt', {
-            url: '/subscriber-mgmt',
-            templateUrl: '/admin-angular/views/manage-subscriber.html',
-            resolve: {
-                loggedin: checkLoggedIn
-            }
-        });
-
         $stateProvider.state('company-user-mgmt', {
             url: '/company-user-mgmt',
             templateUrl: '/admin-angular/views/manage-company-user.html',

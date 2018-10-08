@@ -31,43 +31,45 @@
 					</li>
 				</ul>
 
-				<table class="table table-bordered table-striped" ng-if="qlObj.list.data.length && !qlObj.list.loading">
-				    <thead>
-				        <tr>
-				            <th>key</th>
-				            <th>Qualification</th>
-				            <th>In Area</th>
-				            <th>Action</th>
-				        </tr>
-				    </thead>
-				    <tbody>
-				        <tr ng-repeat="row in qlObj.list.data | orderBy: 'qualifyIn'">
-				            <td>{{row._id}}</td>
-				            <td>
-				            	<div ng-if="!row.isEdit">{{row.name}}</div>
-				            	<div ng-if="row.isEdit"><input type="text" ng-model="row.name" class="form-control" /></div>
-				            </td>
-				            <td>
-				            	<div ng-if="!row.isEdit">{{g.adminData.categoryObject[row.qualifyIn]}}</div>
-				            	<div ng-if="row.isEdit">
-				            		<select class="form-control" ng-model="row.qualifyIn">
-					            		<option ng-repeat="row in g.adminData.categoryArray" value="{{row.key}}">{{row.name}}</option>
-					            	</select>
-				            	</div>
-				        	</td>
-				            <td>
-				                <div ng-if="!row.isEdit"><i ng-click="qlObj.edit.openModal(row)" class="fa fa-pencil-square-o pointer ml-10" aria-hidden="true"></i>
-				                <i ng-click="qlObj.delete.submit(row, true)" ng-if="!row.isDelete" class="fa fa-trash-o pointer ml-10" aria-hidden="true"></i>
-				                <i ng-click="qlObj.delete.submit(row, false)" ng-if="row.isDelete" class="fa fa-trash-o pointer ml-10 text-danger" aria-hidden="true"></i>
-				                <i ng-click="qlObj.edit.activeQa(row, false)" ng-if="row.status" class="fa fa-toggle-on pointer ml-10" aria-hidden="true"></i>
-				                <i ng-click="qlObj.edit.activeQa(row, true)" ng-if="!row.status" class="fa fa-toggle-off pointer ml-10" aria-hidden="true"></i></div>
-				                <div ng-if="row.isEdit">
-				                	<button type="button" class="btn btn-primary" ng-disabled="!row.qualifyIn || !row.name" ng-click="qlObj.edit.submit(row)">Save</button>
-				                </div>
-				            </td>
-				        </tr>
-				    </tbody>
-				</table>
+				<div class="table-responsive" ng-if="qlObj.list.data.length && !qlObj.list.loading">
+					<table class="table table-bordered table-striped">
+					    <thead>
+					        <tr>
+					            <th>key</th>
+					            <th>Qualification</th>
+					            <th>In Area</th>
+					            <th>Action</th>
+					        </tr>
+					    </thead>
+					    <tbody>
+					        <tr ng-repeat="row in qlObj.list.data | orderBy: 'qualifyIn'">
+					            <td>{{row._id}}</td>
+					            <td>
+					            	<div ng-if="!row.isEdit">{{row.name}}</div>
+					            	<div ng-if="row.isEdit"><input type="text" ng-model="row.name" class="form-control" /></div>
+					            </td>
+					            <td>
+					            	<div ng-if="!row.isEdit">{{g.adminData.categoryObject[row.qualifyIn]}}</div>
+					            	<div ng-if="row.isEdit">
+					            		<select class="form-control" ng-model="row.qualifyIn">
+						            		<option ng-repeat="row in g.adminData.categoryArray" value="{{row.key}}">{{row.name}}</option>
+						            	</select>
+					            	</div>
+					        	</td>
+					            <td>
+					                <div ng-if="!row.isEdit"><i ng-click="qlObj.edit.openModal(row)" class="fa fa-pencil-square-o pointer ml-10" aria-hidden="true"></i>
+					                <i ng-click="qlObj.delete.submit(row, true)" ng-if="!row.isDelete" class="fa fa-trash-o pointer ml-10" aria-hidden="true"></i>
+					                <i ng-click="qlObj.delete.submit(row, false)" ng-if="row.isDelete" class="fa fa-trash-o pointer ml-10 text-danger" aria-hidden="true"></i>
+					                <i ng-click="qlObj.edit.activeQa(row, false)" ng-if="row.status" class="fa fa-toggle-on pointer ml-10" aria-hidden="true"></i>
+					                <i ng-click="qlObj.edit.activeQa(row, true)" ng-if="!row.status" class="fa fa-toggle-off pointer ml-10" aria-hidden="true"></i></div>
+					                <div ng-if="row.isEdit">
+					                	<button type="button" class="btn btn-primary" ng-disabled="!row.qualifyIn || !row.name" ng-click="qlObj.edit.submit(row)">Save</button>
+					                </div>
+					            </td>
+					        </tr>
+					    </tbody>
+					</table>
+				</div>
 
 				<div class="row">
 					<div class="col-md-12" ng-if="!qlObj.list.isLoadMore && qlObj.list.count > qlObj.list.data.length">

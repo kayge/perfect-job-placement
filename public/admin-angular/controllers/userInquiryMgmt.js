@@ -45,5 +45,22 @@ appModule.controller('userInquiryMgmtController', ['$scope', '$http', '$location
 			});
 		}
 
+
+
+
+
+		// ------------------ Done -----------------------
+		$scope.userInqObj.isRead = {};
+
+		$scope.userInqObj.isRead.submit = function(dataRow, status) {
+
+			var _status = !dataRow.isRead;
+
+			icdb.update('Inquiry', dataRow._id, { isRead: _status }, function(result) {
+				alertService.flash('Success', 'Done, Mark as read');
+				dataRow.isRead = _status;
+			});
+		}
+
 	}
 ]);

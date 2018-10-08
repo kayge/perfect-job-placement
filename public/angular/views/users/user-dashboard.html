@@ -168,6 +168,14 @@
                                     </div>
                                     <div class="col-lg-6">
                                         <div class="form-group">
+                                            <label>City
+                                                <span class="pull-right text-danger" ng-if="udObj.profileObj.isSubmited && profileForm.city.$error.required">Required</span>
+                                            </label>
+                                            <input type="text" name="city" placeholder="City" class="common-input form-control" ng-model="udObj.profileObj.model.city">
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <div class="form-group">
                                             <label>Address
                                                 <span class="pull-right text-danger" ng-if="udObj.profileObj.isSubmited && profileForm.address.$error.required">Required</span>
                                             </label>

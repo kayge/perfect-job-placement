@@ -10,7 +10,7 @@
 					<h1 class="text-white">
 						Job By category
 					</h1>
-					<p class="text-white link-nav"><a href="#!/home">Home </a>  <span class="lnr lnr-arrow-right"></span>  <a href="#!/category"> Job category</a></p>
+					<p class="text-white link-nav"><a href="#!/home">Home </a>  <span class="lnr lnr-arrow-right"></span>  <a class="pointer"> Job category</a></p>
 				</div>
 			</div>
 		</div>
@@ -50,7 +50,7 @@
 									<h6><span class="f-w-600"><i class="fa fa-map-marker" aria-hidden="true"></i> City:</span> {{jobRow.cityName}} - ({{jobRow.jobLocation}})</h6>
 									<h6><span class="f-w-600">Required Qualification:</span> {{g.adminData.categoryObject[jobRow.qualification]}}</h6>
 
-									<button type="button" class="btn btn-primary btn-sm ic-btn" ng-click="homeObj.jobObj.preview.open(jobRow)">View Job Detail</button>
+									<button type="button" class="btn btn-primary btn-sm ic-btn" ng-click="homeObj.jobObj.preview.open(jobRow)">View Job Details</button>
 									<button type="button" class="btn btn-secondary btn-sm ic-btn" ng-click="homeObj.jobObj.applyjob.openModal(jobRow)">Apply Job</button>
 								</div>
 							</div>

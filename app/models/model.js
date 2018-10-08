@@ -45,6 +45,7 @@ var AdminUsers = new Schema({
 	lastName: String,
 	email: String,
 	password: String,
+	isAdmin: {type: Boolean, default: true},
 	createdAt: Number,
 	isActive: {type: Boolean, default: true},
 });
@@ -66,19 +67,18 @@ var CandidateRegister = new Schema({
 	email: String,
 	image: String,
 	resume: String,
-	mobile: String,
-	wpContact: String,
-	gender: Boolean,
+	mobile: Number,
+	wpContact: Number,
+	gender: String,
 	city: String,
 	currentLocation: String,
 	birthDate: String,
-	qualifiction: String,
+	qualification: String,
 	department: String,
 	areaOfInterest: [],
 	expectedSalary: String,
-	experience: Boolean,
+	experience: String,
 	jobId: String,
-	experienceDetail: [],
 	createdAt: Number,
 	status: {type: Boolean, default: false},
 });
@@ -138,6 +138,7 @@ var OurClients = new Schema({
 	password: String,
 	contact: Number,
 	wpContact: Number,
+	city: String,
 	address: String,
 	companyWebsite: String,
 	isActive: {type: Boolean, default: true},
@@ -185,15 +186,9 @@ var SiteVisitorSchema = mongoose.Schema({
     continentCode: String,
 });
 
-var SubscribedUser = new Schema({
-	email: String,
-	createdAt: Number,
-	status: {type: Boolean, default: true},
-});
 
 
 mongoose.model('Qualifications', QualificationSchema);
 mongoose.model('AreaOfInterest', AreaOfInterestSchema);
 mongoose.model('JobLocations', JobLocations);
 mongoose.model('SiteVisitor', SiteVisitorSchema);
-mongoose.model('SubscribedUser', SubscribedUser);

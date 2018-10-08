@@ -10,24 +10,13 @@ appModule.controller('JobMgmtController', ['$scope', '$http', '$location', '$uib
 		$scope.jobMgmtObj.list = {};
 		$scope.jobMgmtObj.list.loading = false;
 		$scope.jobMgmtObj.list.data = [];
-		$scope.jobMgmtObj.list.count = 0;
 
 		$scope.jobMgmtObj.list.init = function() {
 			$scope.jobMgmtObj.list.loading = true;
 
-			$http.post('api/admin/get-data/with-condition', {
-				model: 'JobsBazaar',
-				skip: $scope.jobMgmtObj.list.data.length,
-				condition: {},
-			}).success(function(response) {
-				
-				if (response.data && response.data.length) {
-					for (var row in response.data) {
-						$scope.jobMgmtObj.list.data.push(response.data[row]);
-					}
-
-					$scope.jobMgmtObj.list.count = response.count;
-				}
+			$http.post('api/admin/get-job/all').success(function(response) {
+				console.log(response);
+				$scope.jobMgmtObj.list.data = response.data;
 
 				$timeout(function() {
 	        		$scope.jobMgmtObj.list.loading = false;
@@ -36,69 +25,50 @@ appModule.controller('JobMgmtController', ['$scope', '$http', '$location', '$uib
 		}
 
 
-		$scope.jobMgmtObj.list.isLoadMore = false;
+		// -------------- Update Job -------------------
+		$scope.job = {};
+		$scope.job.create = {};
+		$scope.job.create.model = {};
 
-		$scope.jobMgmtObj.list.loadMore = function() {
-			$scope.jobMgmtObj.list.isLoadMore = true;
+		$scope.job.create.openModal = function(dataRow) {
+			$scope.job.create.model = angular.copy(dataRow);
+			$scope.job.create.model.interviewDateFrom = new Date(dataRow.interviewDateFrom);
+			$scope.job.create.model.interviewDateTo = new Date(dataRow.interviewDateTo);
+			console.log($scope.job.create.model);
+			$('#add-new-job').modal('show');
+		}
 
-			$http.post('api/admin/get-data/with-condition', {
-				model: 'JobsBazaar',
-				skip: $scope.jobMgmtObj.list.data.length,
-				condition: {},
-			}).success(function(response) {
-				
-				if (response.data && response.data.length) {
-					for (var row in response.data) {
-						$scope.jobMgmtObj.list.data.push(response.data[row]);
-					}
 
-					$scope.jobMgmtObj.list.count = response.count;
-				}
+		$scope.job.create.closeModal = function() {
+			$scope.job.create.model = {};
+			$scope.job.create.isSubmited = false;
+			$scope.job.create.isReqSent = false;
+			$('#add-new-job').modal('hide');
+		}
 
-				$timeout(function() {
-	        		$scope.jobMgmtObj.list.isLoadMore = false;
-	        	}, 10);
+
+		$scope.job.create.isSubmited = false;
+		$scope.job.create.isReqSent = false;
+		$scope.job.create.submit = function(form) {
+
+			if (!form.$valid) {
+				$scope.job.create.isSubmited = true;
+				return;
+			}
+
+			$scope.job.create.isReqSent = true;
+
+
+			icdb.update('JobsBazaar', $scope.job.create.model._id, $scope.job.create.model, function(result) {
+				$scope.job.create.closeModal();
+	            alertService.flash('success', 'Job has been Updated successfully.');
 	        });
 		}
 
 
-		// -------------- Update Job -------------------
-		$scope.jobMgmtObj.edit = {};
-		$scope.jobMgmtObj.edit.model = {};
 
-		$scope.jobMgmtObj.edit.openModal = function(row) {
-			$scope.jobMgmtObj.edit.model = angular.copy(row);
-			$scope.jobMgmtObj.edit.model.interviewDateFrom = new Date(row.interviewDateFrom);
-			$scope.jobMgmtObj.edit.model.interviewDateTo = new Date(row.interviewDateTo);
-
-			$('#update-job-data').modal('show');
-		}
-
-		$scope.jobMgmtObj.edit.closeModal = function() {
-			$scope.jobMgmtObj.edit.model.model = {};
-			$scope.jobMgmtObj.edit.isSubmited = false;
-			$scope.jobMgmtObj.edit.isReqSent = false;
-			$('#update-job-data').modal('hide');
-		}
-
-		$scope.jobMgmtObj.edit.isSubmited = false;
-		$scope.jobMgmtObj.edit.isReqSent = false;
-		$scope.jobMgmtObj.edit.submit = function(form) {
-
-			if (!form.$valid) {
-				$scope.jobMgmtObj.edit.isSubmited = true;
-				return;
-			}
-
-			$scope.jobMgmtObj.edit.isReqSent = true;
-
-			icdb.update('JobsBazaar', $scope.jobMgmtObj.edit.model._id, $scope.jobMgmtObj.edit.model, function(response) {
-				$scope.jobMgmtObj.edit.closeModal();
-				alertService.flash('success', 'Job has been created successfully.');
-			});
-		}
-
-		$scope.jobMgmtObj.edit.activeJob = function(row) {
+		$scope.jobMgmtObj.jobStatsus = {};
+		$scope.jobMgmtObj.jobStatsus.submit = function(row) {
 			icdb.update('JobsBazaar', row._id,{
 				status: row.status
 			}, function(response) {
@@ -124,8 +94,6 @@ appModule.controller('JobMgmtController', ['$scope', '$http', '$location', '$uib
 					}
 				}
 			});
-
-			$scope.jobMgmtObj.list.count = $scope.jobMgmtObj.list.count - 1;
 		}
 
 
@@ -139,8 +107,7 @@ appModule.controller('JobMgmtController', ['$scope', '$http', '$location', '$uib
 			icdb.insert('JobsBazaar', postData, function(response) {
 				if (response.status) {
 					$scope.jobMgmtObj.list.data.push(response.result);
-					console.log($scope.jobMgmtObj.list.data);
-					$scope.jobMgmtObj.list.count = $scope.jobMgmtObj.list.count + 1;
+
 					alertService.flash('success', 'Job has been clone successfully.');
 				}
 			});

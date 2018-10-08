@@ -166,7 +166,7 @@
 						<a href="#!/category/1/4">
 							<i class="theme-color fa fa-handshake-o font-50" aria-hidden="true"></i>
 						</a>
-						<p>Sales & Marcketing</p>
+						<p>Sales & Marketing</p>
 					</div>
 				</div>
 				<div class="col-lg-2 col-md-4 col-sm-6">
@@ -194,7 +194,7 @@
 						<option value="1">Industrial</option>
 						<option value="2">Computer</option>
 						<option value="3">Account</option>
-						<option value="4">Sales & Marcketing</option>
+						<option value="4">Sales & Marketing</option>
 						<option value="5">Back Office</option>
 						<option value="6">Others</option>
 					</select>
@@ -217,7 +217,7 @@
 					</ul>
 					
 					<div class="cat-list">
-						<h6 class="text-center text-orange">You are watching ({{homeObj.jobObj.totalJobs}} / {{homeObj.jobObj.list.data.length}}) jobs</h6>
+						<h6 class="text-center text-orange">You are watching ({{homeObj.jobObj.list.totalJobs}} / {{homeObj.jobObj.list.data.length}}) jobs</h6>
 					</div>
 
 					<div class="single-post position-relative" ng-repeat="jobRow in dataFilterObject = (homeObj.jobObj.list.data | filter: homeObj.cobj.filter.filterObj) | orderBy: '-createdAt'">
@@ -245,7 +245,7 @@
 										<span ng-if="jobRow.department.length"> - <span ng-repeat="drow in jobRow.department" class="f-w-600 text-orange">[{{drow}}] </span></span>
 									</h6>
 
-									<button type="button" class="btn btn-primary btn-sm ic-btn" ng-click="homeObj.jobObj.preview.open(jobRow)">View Job Detail</button>
+									<button type="button" class="btn btn-primary btn-sm ic-btn" ng-click="homeObj.jobObj.preview.open(jobRow)">View Job Details</button>
 									<button type="button" class="btn btn-secondary btn-sm ic-btn" ng-click="homeObj.jobObj.applyjob.openModal(jobRow)">Apply Job</button>
 								</div>
 							</div>
@@ -264,7 +264,7 @@
 					</div>
 
 					<div ng-if="!homeObj.jobObj.list.isLoadMore">
-						<a class="text-uppercase loadmore-btn mx-auto d-block pointer primary-btn text-white" ng-if="homeObj.jobObj.totalJobs > homeObj.jobObj.list.data.length" ng-click="homeObj.jobObj.loadMore()">Load More Jobs</a>
+						<a class="text-uppercase loadmore-btn mx-auto d-block pointer primary-btn text-white" ng-if="homeObj.jobObj.list.totalJobs > homeObj.jobObj.list.data.length" ng-click="homeObj.jobObj.init(true)">Load More Jobs</a>
 					</div>
 				</div>
 				
@@ -276,13 +276,13 @@
 							<div class="col-md-12">
 								<select class="form-control" ng-change="homeObj.cobj.gotoLocation('category/2/', homeObj.selectedJobLocation)" ng-model="homeObj.selectedJobLocation">
 									<option value="">- Select Job Location -</option>
-									<option value="{{row._id}}" ng-repeat="row in homeObj.jobObj.jobsByLocation">{{row.city}} <span class="text-orange">{{row.count}}</span></option>
+									<option value="{{row._id}}" ng-repeat="row in homeObj.jobObj.list.jobsByLocation">{{row.city}} <span class="text-orange">{{row.count}}</span></option>
 								</select>
 							</div>
 						</div>
 
 						<ul class="cat-list display-not-in-mobile">
-							<li class="pointer" ng-repeat="row in homeObj.jobObj.jobsByLocation">
+							<li class="pointer" ng-repeat="row in homeObj.jobObj.list.jobsByLocation">
 								<a class="justify-content-between d-flex" href="#!/category/2/{{row._id}}">
 									<p>{{row.city}}</p>
 									<span>{{row.count}}</span>
@@ -324,7 +324,7 @@
 						<div class="buttons" ng-click="homeObj.cobj.commingSoon()">
 							<i class="fa fa-apple" aria-hidden="true"></i>
 							<div class="desc">
-								<a class="pointer" data-toggle="tooltip" title="Comming Soon..." data-placement="top">
+								<a class="pointer" data-toggle="tooltip" title="Coming Soon..." data-placement="top">
 									<p>
 										<span>Available</span> <br>
 										on App Store
@@ -335,7 +335,7 @@
 						<div class="buttons" ng-click="homeObj.cobj.commingSoon()">
 							<i class="fa fa-android" aria-hidden="true"></i>
 							<div class="desc">
-								<a class="pointer" data-toggle="tooltip" title="Comming Soon..." data-placement="top">
+								<a class="pointer" data-toggle="tooltip" title="Coming Soon..." data-placement="top">
 									<p>
 										<span>Available</span> <br>
 										on Play Store

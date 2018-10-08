@@ -4,9 +4,10 @@
     </h1>
 </div>
 
+
 <div class="view-logs" ng-if="!dbObj.comObj.loading">
     <div class="row">
-        <div class="col-md-3">
+        <div class="col-md-3 col-xs-12 mb-20">
             <div class="card text-center">
                 <div class="card-header">
                     <h5 class="text-success">Total Site Visitor</h5>
@@ -18,7 +19,7 @@
                 </div>
             </div>
         </div>
-        <div class="col-md-3">
+        <div class="col-md-3 col-xs-12 mb-20">
             <div class="card text-center">
                 <div class="card-header">
                     <h5 class="text-info">Total Job Poster</h5>
@@ -30,7 +31,7 @@
                 </div>
             </div>
         </div>
-        <div class="col-md-3">
+        <div class="col-md-3 col-xs-12 mb-20">
             <div class="card text-center">
                 <div class="card-header">
                     <h5 class="text-success">Total Job Seeker</h5>
@@ -42,7 +43,7 @@
                 </div>
             </div>
         </div>
-        <div class="col-md-3">
+        <div class="col-md-3 col-xs-12 mb-20">
             <div class="card text-center">
                 <div class="card-header">
                     <h5 class="text-info">Total Active Jobs</h5>
@@ -56,32 +57,32 @@
         </div>
     </div>
 
-    <div class="row mt-30">
-        <div class="col-md-3">
+    <div class="row">
+        <div class="col-md-3 col-xs-12 mb-20">
             <div class="card text-center">
                 <div class="card-header">
                     <h5 class="text-success">Candidate Register</h5>
                 </div>
                 <div class="card-body">
                     <h2 class="card-title m-0">
-                        <span class="pointer" ng-click="dbObj.rgUser.openModal()"><i class="fa fa-plus-square-o text-success" aria-hidden="true"></i></span>
+                        <span class="pointer" ng-click="cdUser.create.openModal()"><i class="fa fa-plus-square-o text-success" aria-hidden="true"></i></span>
                     </h2>
                 </div>
             </div>
         </div>
-        <div class="col-md-3">
+        <div class="col-md-3 col-xs-12 mb-20">
             <div class="card text-center">
                 <div class="card-header">
                     <h5 class="text-info">Post New Job</h5>
                 </div>
                 <div class="card-body">
                     <h2 class="card-title m-0">
-                        <span class="pointer" ng-click="dbObj.postObj.openModal()"><i class="fa fa-plus-square-o text-info" aria-hidden="true"></i></span>
+                        <span class="pointer" ng-click="job.create.openModal()"><i class="fa fa-plus-square-o text-info" aria-hidden="true"></i></span>
                     </h2>
                 </div>
             </div>
         </div>
-        <div class="col-md-3">
+        <div class="col-md-3 col-xs-12 mb-20">
             <div class="card text-center">
                 <div class="card-header">
                     <h5 class="text-success">Manage Job</h5>
@@ -89,58 +90,6 @@
                 <div class="card-body">
                     <h2 class="card-title m-0">
                         <span class="pointer" ng-click="g.stateGo('jobs-mgmt')"><i class="fa fa-plus-square-o text-success" aria-hidden="true"></i></span>
-                    </h2>
-                </div>
-            </div>
-        </div>
-        <div class="col-md-3">
-            <div class="card text-center">
-                <div class="card-header">
-                    <h5 class="text-info">Total Subscriber</h5>
-                </div>
-                <div class="card-body">
-                    <h2 class="card-title m-0">
-                        <span clsas="text-info">{{dbObj.comObj.totalCounts.getSubscribedUser || 0}}</span>
-                    </h2>
-                </div>
-            </div>
-        </div>
-    </div>
-
-
-    <div class="row mt-30">
-        <div class="col-md-3">
-            <div class="card text-center">
-                <div class="card-header">
-                    <h5 class="text-success">Offline Job apply</h5>
-                </div>
-                <div class="card-body">
-                    <h2 class="card-title m-0">
-                        <span class="pointer" ng-click="dbObj.rgUser.offlineUserReg()"><i class="fa fa-plus-square-o text-success" aria-hidden="true"></i></span>
-                    </h2>
-                </div>
-            </div>
-        </div>
-        <div class="col-md-3">
-            <div class="card text-center">
-                <div class="card-header">
-                    <h5 class="text-info">Manage Office Account</h5>
-                </div>
-                <div class="card-body">
-                    <h2 class="card-title m-0">
-                        <span class="pointer"><i class="fa fa-plus-square-o text-info" aria-hidden="true"></i></span>
-                    </h2>
-                </div>
-            </div>
-        </div>
-        <div class="col-md-3">
-            <div class="card text-center">
-                <div class="card-header">
-                    <h5 class="text-success">Manage Employees</h5>
-                </div>
-                <div class="card-body">
-                    <h2 class="card-title m-0">
-                        <span class="pointer"><i class="fa fa-plus-square-o text-success" aria-hidden="true"></i></span>
                     </h2>
                 </div>
             </div>

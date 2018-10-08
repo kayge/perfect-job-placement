@@ -20,34 +20,36 @@
 				        </li>
 				    </ul>
 
-				    <table class="table table-bordered table-striped mb-0" ng-if="jl.list.data.length && !jl.list.loading">
-					    <thead>
-					        <tr>
-					            <th>key</th>
-					            <th>Location</th>
-					            <th>Action</th>
-					        </tr>
-					    </thead>
-					    <tbody>
-					        <tr ng-repeat="row in jl.list.data | orderBy: 'city'">
-					            <td>{{row._id}}</td>
-					            <td>
-					            	<div ng-if="!row.isEdit">{{row.city}}</div>
-					            	<div ng-if="row.isEdit"><input type="text" ng-model="row.city" class="form-control" /></div>
-					            </td>
-					            <td>
-					                <div ng-if="!row.isEdit"><i ng-click="jl.edit.openModal(row)" class="fa fa-pencil-square-o pointer ml-10" aria-hidden="true"></i>
-					                <i ng-click="adminObj.jl.delete.submit(row, true)" ng-if="!row.isDelete" class="fa fa-trash-o pointer ml-10" aria-hidden="true"></i>
-					                <i ng-click="adminObj.jl.delete.submit(row, false)" ng-if="row.isDelete" class="fa fa-trash-o pointer ml-10 text-danger" aria-hidden="true"></i>
-					                <i ng-click="jl.edit.activeQa(row, false)" ng-if="row.status" class="fa fa-toggle-on pointer ml-10" aria-hidden="true"></i>
-					                <i ng-click="jl.edit.activeQa(row, true)" ng-if="!row.status" class="fa fa-toggle-off pointer ml-10" aria-hidden="true"></i></div>
-					                <div ng-if="row.isEdit">
-					                	<button type="button" class="btn btn-primary" ng-disabled="!row.city" ng-click="jl.edit.submit(row)">Save</button>
-					                </div>
-					            </td>
-					        </tr>
-					    </tbody>
-					</table>
+				    <div class="table-responsive" ng-if="jl.list.data.length && !jl.list.loading">
+					    <table class="table table-bordered table-striped mb-0">
+						    <thead>
+						        <tr>
+						            <th>key</th>
+						            <th>Location</th>
+						            <th>Action</th>
+						        </tr>
+						    </thead>
+						    <tbody>
+						        <tr ng-repeat="row in jl.list.data | orderBy: 'city'">
+						            <td>{{row._id}}</td>
+						            <td>
+						            	<div ng-if="!row.isEdit">{{row.city}}</div>
+						            	<div ng-if="row.isEdit"><input type="text" ng-model="row.city" class="form-control" /></div>
+						            </td>
+						            <td>
+						                <div ng-if="!row.isEdit"><i ng-click="jl.edit.openModal(row)" class="fa fa-pencil-square-o pointer ml-10" aria-hidden="true"></i>
+						                <i ng-click="adminObj.jl.delete.submit(row, true)" ng-if="!row.isDelete" class="fa fa-trash-o pointer ml-10" aria-hidden="true"></i>
+						                <i ng-click="adminObj.jl.delete.submit(row, false)" ng-if="row.isDelete" class="fa fa-trash-o pointer ml-10 text-danger" aria-hidden="true"></i>
+						                <i ng-click="jl.edit.activeQa(row, false)" ng-if="row.status" class="fa fa-toggle-on pointer ml-10" aria-hidden="true"></i>
+						                <i ng-click="jl.edit.activeQa(row, true)" ng-if="!row.status" class="fa fa-toggle-off pointer ml-10" aria-hidden="true"></i></div>
+						                <div ng-if="row.isEdit">
+						                	<button type="button" class="btn btn-primary" ng-disabled="!row.city" ng-click="jl.edit.submit(row)">Save</button>
+						                </div>
+						            </td>
+						        </tr>
+						    </tbody>
+						</table>
+					</div>
 
 					<div ng-if="!jl.list.data.length && !jl.list.loading" class="no-data-cn text-center">
 						<h4>No data</h4>
@@ -82,43 +84,45 @@
 						</li>
 				    </ul>
 
-				    <table class="table table-bordered table-striped mb-0" ng-if="jl.aofintObj.list.data.length && !jl.aofintObj.list.loading">
-					    <thead>
-					        <tr>
-					            <th>key</th>
-					            <th>Title</th>
-					            <th>Area</th>
-					            <th>Action</th>
-					        </tr>
-					    </thead>
-					    <tbody>
-					        <tr ng-repeat="row in jl.aofintObj.list.data | orderBy: 'title'">
-					            <td>{{row._id}}</td>
-					            <td>
-					            	<div ng-if="!row.isEdit">{{row.title}}</div>
-					            	<div ng-if="row.isEdit"><input type="text" ng-model="row.title" class="form-control" /></div>
-					            </td>
-					            <td>
-				            		<div ng-if="!row.isEdit">{{g.adminData.categoryObject[row.department]}}</div>
-					            	<div ng-if="row.isEdit">
-					            		<select class="form-control" ng-model="row.department">
-						            		<option ng-repeat="row in g.adminData.categoryArray" value="{{row.key}}">{{row.name}}</option>
-						            	</select>
-					            	</div>
-					        	</td>
-					            <td>
-					                <div ng-if="!row.isEdit"><i ng-click="jl.aofintObj.edit.openModal(row)" class="fa fa-pencil-square-o pointer ml-10" aria-hidden="true"></i>
-					                <i ng-click="jl.aofintObj.delete.confirm(row, true)" ng-if="!row.confirm" class="fa fa-trash-o pointer ml-10" aria-hidden="true"></i>
-					                <i ng-click="jl.aofintObj.delete.confirm(row, false)" ng-if="row.confirm" class="fa fa-trash-o pointer ml-10 text-danger" aria-hidden="true"></i>
-					                <i ng-click="jl.aofintObj.edit.activeQa(row, false)" ng-if="row.status" class="fa fa-toggle-on pointer ml-10" aria-hidden="true"></i>
-					                <i ng-click="jl.aofintObj.edit.activeQa(row, true)" ng-if="!row.status" class="fa fa-toggle-off pointer ml-10" aria-hidden="true"></i></div>
-					                <div ng-if="row.isEdit">
-					                	<button type="button" class="btn btn-primary" ng-disabled="!row.title" ng-click="jl.edit.submit(row)">Save</button>
-					                </div>
-					            </td>
-					        </tr>
-					    </tbody>
-					</table>
+				    <div class="table-responsive" ng-if="jl.aofintObj.list.data.length && !jl.aofintObj.list.loading">
+					    <table class="table table-bordered table-striped mb-0">
+						    <thead>
+						        <tr>
+						            <th>key</th>
+						            <th>Title</th>
+						            <th>Area</th>
+						            <th>Action</th>
+						        </tr>
+						    </thead>
+						    <tbody>
+						        <tr ng-repeat="row in jl.aofintObj.list.data | orderBy: 'title'">
+						            <td>{{row._id}}</td>
+						            <td>
+						            	<div ng-if="!row.isEdit">{{row.title}}</div>
+						            	<div ng-if="row.isEdit"><input type="text" ng-model="row.title" class="form-control" /></div>
+						            </td>
+						            <td>
+					            		<div ng-if="!row.isEdit">{{g.adminData.categoryObject[row.department]}}</div>
+						            	<div ng-if="row.isEdit">
+						            		<select class="form-control" ng-model="row.department">
+							            		<option ng-repeat="row in g.adminData.categoryArray" value="{{row.key}}">{{row.name}}</option>
+							            	</select>
+						            	</div>
+						        	</td>
+						            <td>
+						                <div ng-if="!row.isEdit"><i ng-click="jl.aofintObj.edit.openModal(row)" class="fa fa-pencil-square-o pointer ml-10" aria-hidden="true"></i>
+						                <i ng-click="jl.aofintObj.delete.confirm(row, true)" ng-if="!row.confirm" class="fa fa-trash-o pointer ml-10" aria-hidden="true"></i>
+						                <i ng-click="jl.aofintObj.delete.confirm(row, false)" ng-if="row.confirm" class="fa fa-trash-o pointer ml-10 text-danger" aria-hidden="true"></i>
+						                <i ng-click="jl.aofintObj.edit.activeQa(row, false)" ng-if="row.status" class="fa fa-toggle-on pointer ml-10" aria-hidden="true"></i>
+						                <i ng-click="jl.aofintObj.edit.activeQa(row, true)" ng-if="!row.status" class="fa fa-toggle-off pointer ml-10" aria-hidden="true"></i></div>
+						                <div ng-if="row.isEdit">
+						                	<button type="button" class="btn btn-primary" ng-disabled="!row.title" ng-click="jl.edit.submit(row)">Save</button>
+						                </div>
+						            </td>
+						        </tr>
+						    </tbody>
+						</table>
+					</div>
 
 					<div ng-if="!jl.aofintObj.list.data.length && !jl.aofintObj.list.loading" class="text-center">
 						<h4>No data</h4>

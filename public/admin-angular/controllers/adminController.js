@@ -29,8 +29,6 @@ appModule.controller('AdminController', ['$scope', '$http', '$location', '$uibMo
 	        });
 		}
 
-		if ($rootScope.g.loggedUser && $rootScope.g.loggedUser._id) {
-			$scope.adminObj.init();
-		}
+		$scope.adminObj.init();
 	}
 ]);

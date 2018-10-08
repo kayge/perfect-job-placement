@@ -10,47 +10,58 @@
 					<h3 class="h3">Company User Management</h3>
 				</div>
 
-				<table class="table table-bordered table-striped mb-0" ng-if="cpUserObj.list.data.length && !cpUserObj.list.loading">
-				    <thead>
-				        <tr>
-				            <th>#</th>
-				            <th>Email</th>
-				            <th>Company Name</th>
-				            <th>Contact</th>
-				            <th>Whatsapp Contact</th>
-				            <th>email</th>
-							<th>password</th>
-				            <th>Action</th>
-				        </tr>
-				    </thead>
-				    <tbody>
-				        <tr ng-repeat="dataRow in cpUserObj.list.data | orderBy: '-createdAt'">
-				            <td>{{$index+1}}</td>
-				            <td>
-								{{dataRow.email}}
-				            </td>
-				            <td>
-				            	{{dataRow.companyName}}</span>
-				            </td>
-				            <td>
-				            	{{dataRow.contact}}</span>
-				            </td>
-				            <td>
-				            	{{dataRow.email}}</span>
-				            </td>
-				            <td>
-				            	{{dataRow.password}}</span>
-				            </td>
-				            <td>
-				            	{{dataRow.wpContact}}</span>
-				            </td>
-				            <td>
-				                <i ng-click="cpUserObj.list.remove.submit(dataRow, false)" ng-if="!dataRow.isDelete" class="fa fa-trash-o pointer ml-10" aria-hidden="true"></i>
-				                <i ng-click="cpUserObj.list.remove.submit(dataRow, true)" ng-if="dataRow.isDelete" class="fa fa-trash-o pointer ml-10 text-danger" aria-hidden="true"></i>
-				            </td>
-				        </tr>
-				    </tbody>
-				</table>
+				<div class="form-group">
+					<input type="text" placeholder="Search by comapany name and city" name="searchdata" ng-model="cpUserObj.list.filterData" class="form-control">
+				</div>
+
+				<div class="table-responsive" ng-if="cpUserObj.list.data.length && !cpUserObj.list.loading">
+					<table class="table table-bordered table-striped mb-0">
+					    <thead>
+					        <tr>
+					            <th>#</th>
+					            <th>Company Name</th>
+					            <th>City</th>
+					            <th>Email</th>
+					            <th>Contact</th>
+					            <th>Whatsapp Contact</th>
+					            <th>User Name</th>
+								<th>Password</th>
+					            <th>Action</th>
+					        </tr>
+					    </thead>
+					    <tbody>
+					        <tr ng-repeat="dataRow in cpUserObj.list.data | orderBy: '-createdAt' | filter: { companyName: cpUserObj.list.filterData, city: companyName }">
+					            <td>{{$index+1}}</td>
+					            <td>
+					            	{{dataRow.companyName}}</span>
+					            </td>
+					            <td>
+					            	{{dataRow.city}}</span>
+					            </td>
+					            <td>
+									{{dataRow.email}}
+					            </td>
+					            <td>
+					            	{{dataRow.contact}}</span>
+					            </td>
+					            <td>
+					            	{{dataRow.wpContact}}</span>
+					            </td>
+					            <td>
+					            	{{dataRow.password}}</span>
+					            </td>
+					            <td>
+					            	{{dataRow.wpContact}}</span>
+					            </td>
+					            <td>
+					                <i ng-click="cpUserObj.list.remove.submit(dataRow, false)" ng-if="!dataRow.isDelete" class="fa fa-trash-o pointer ml-10" aria-hidden="true"></i>
+					                <i ng-click="cpUserObj.list.remove.submit(dataRow, true)" ng-if="dataRow.isDelete" class="fa fa-trash-o pointer ml-10 text-danger" aria-hidden="true"></i>
+					                <i ng-click="cpUserObj.list.edit.openModal(dataRow)" class="fa fa-pencil-square-o pointer ml-10" aria-hidden="true"></i>
+					            </td>
+					        </tr>
+					    </tbody>
+					</table>
+				</div>
 
 				<div ng-if="!cpUserObj.list.data.length && !cpUserObj.list.loading" class="no-data-cn text-center">
 					<h4>No data</h4>

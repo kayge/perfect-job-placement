@@ -131,7 +131,7 @@
 								</div>
 								<div class="custom-control custom-radio custom-control-inline">
 									<input type="radio" class="custom-control-input" value="2" id="genderid2" ng-model="homeObj.jobObj.applyjob.model.gender">
-									<label class="custom-control-label" for="genderid2">Famale</label>
+									<label class="custom-control-label" for="genderid2">Female</label>
 								</div>
 							</div>
 						</div>
@@ -184,7 +184,7 @@
 							<label>Area Of Interest</label>
 
 							<div class="multi-select-span" ng-if="homeObj.jobObj.applyjob.model.department">
-								<span class="pointer" ng-repeat="row in dbObj.comObj.areaOfInterest" ng-if="row.department == homeObj.jobObj.applyjob.model.department" ng-click="g.adminData.multiSelect(homeObj.jobObj.applyjob.model.areaOfInterest, row.title)">
+								<span class="pointer" ng-repeat="row in g.globalvarObj.areaOfInterest" ng-if="row.department == homeObj.jobObj.applyjob.model.department" ng-click="g.adminData.multiSelect(homeObj.jobObj.applyjob.model.areaOfInterest, row.title)">
 									<span class="position-relative">
 										<span class="badge badge-pill badge-primary">
 											<span ng-if="homeObj.jobObj.applyjob.model.areaOfInterest.indexOf(row.title) != -1"><i class="fa fa-check-square" aria-hidden="true"></i></span> {{row.title}}
@@ -206,7 +206,17 @@
 					<div class="col-md-6">
 						<div class="form-group">
 							<label>Experience</label>
-							<input type="text" class="form-control" name="experienceDetail" ng-model="homeObj.jobObj.applyjob.model.experienceDetail" placeholder="ex - 5years">
+							<!-- <input type="text" class="form-control" name="experienceDetail" ng-model="homeObj.jobObj.applyjob.model.experienceDetail" placeholder="ex - 5years"> -->
+
+							<select class="form-control" name="experience" ng-model="jobMgmtObj.edit.model.experience" ng-required="true" ng-class="{ 'text-error': homeObj.jobObj.applyjob.isSubmited && registerCandidateFrom.experience.$error.required }">
+								<option value="">--- Select Experience ---</option>
+								<option value="1">Fresher</option>
+								<option value="2">6 Month To 1 Year</option>
+								<option value="3">1 To 2 Year</option>
+								<option value="4">3 To 5 Year</option>
+								<option value="5">5 To 10 Year</option>
+								<option value="6">10 Year+</option>
+							</select>
 						</div>
 					</div>
 					<div class="col-md-6">
@@ -271,7 +281,7 @@
 			<div class="modal-body">
 				<div class="row">
 					<div class="col-md-12">
-						<h5>Comming Soon....</h5>
+						<h5>Coming Soon....</h5>
 					</div>
 				</div>
 			</div>

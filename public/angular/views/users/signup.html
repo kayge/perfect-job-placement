@@ -65,6 +65,14 @@
                     </div>
                     <div class="col-lg-12">
                         <div class="form-group">
+                            <label>City
+                                <span class="pull-right text-danger" ng-if="uObj.cuObj.add.isSubmited && signupForm.city.$error.required">Required</span>
+                            </label>
+                            <input name="city" placeholder="City" class="common-input form-control" type="text" ng-model="uObj.cuObj.add.model.city">
+                        </div>
+                    </div>
+                    <div class="col-lg-12">
+                        <div class="form-group">
                             <label>Address
                                 <span class="pull-right text-danger" ng-if="uObj.cuObj.add.isSubmited && signupForm.address.$error.required">Required</span>
                             </label>

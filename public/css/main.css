@@ -3128,6 +3128,12 @@ body.mobile-nav-active #mobile-nav-toggle {
   background-color: #222222;
 }
 
+@media (max-width: 991.98px) {
+  .footer-area {
+    text-align: center;
+  }
+}
+
 .footer-area .footer-nav li {
   margin-top: 8px;
 }
@@ -3230,7 +3236,7 @@ body.mobile-nav-active #mobile-nav-toggle {
 }
 
 .footer-social {
-  text-align: right;
+  text-align: center;
 }
 
 .footer-social a {
@@ -3267,7 +3273,7 @@ body.mobile-nav-active #mobile-nav-toggle {
 
 @media (max-width: 991.98px) {
   .footer-social {
-    text-align: left;
+    text-align: center;
     margin-top: 20px;
   }
 }
